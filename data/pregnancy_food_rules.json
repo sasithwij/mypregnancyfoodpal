@@ -1,0 +1,3047 @@
+{
+  "schema_version": "1.0",
+  "generated": "2026-11-02",
+  "description": "Pregnancy food safety rules built only from two Australian guides. Ratings: red = avoid, amber = OK with a stated caveat, green = fine. Where the guides disagree, the rule uses the stricter advice and links to an entry in `conflicts`.",
+  "rating_scale": {
+    "red": "Avoid",
+    "amber": "OK with caveats (see `caveat`)",
+    "green": "Fine"
+  },
+  "field_guide": {
+    "id": "Stable identifier for the rule.",
+    "category": "Food group, matching the guides' tables.",
+    "name": "Human-readable food name.",
+    "examples": "Typical items this rule covers.",
+    "match_terms": "Lower-case words or phrases to match against barcode ingredient lists, menu text and photo labels.",
+    "rating": "red | amber | green.",
+    "caveat": "For amber: the condition that makes it OK. For red: null.",
+    "safe_if": "For red items that become OK when prepared differently (e.g. cooked until steaming hot). Null if never OK.",
+    "limit": "Optional quantity limit, structured for the app to track.",
+    "reason": "Why, in plain words.",
+    "hazards": "listeria | salmonella | toxoplasmosis | mercury | vitamin_a | alcohol | caffeine | general_food_poisoning.",
+    "ask_restaurant": "What to ask or request when ordering. Null if not relevant.",
+    "sources": "Which guide(s) say this, with PDF page number and a short paraphrase.",
+    "conflict": "Id of an entry in `conflicts` if the guides disagree on this food, else null.",
+    "warning": "Optional. true = the guides disagree and this item is only OK under strict conditions; the app should show the caveat as a prominent warning, not a footnote."
+  },
+  "sources": {
+    "nsw": {
+      "title": "Food Safety During Pregnancy",
+      "publisher": "NSW Food Authority (NSW Government)",
+      "edition": "FA432/2304 (PDF created September 2023)",
+      "uploaded_file": "Pregnancy_brochure_21_0.pdf",
+      "url": "https://www.foodauthority.nsw.gov.au/foodsafetyandyou/life-events-and-food/pregnancy"
+    },
+    "rwh": {
+      "title": "Food safety in pregnancy (fact sheet)",
+      "publisher": "The Royal Women's Hospital, Victoria",
+      "edition": "March 2026",
+      "uploaded_file": "Food_safety_in_pregnancy_260316.pdf",
+      "url": "https://www.thewomens.org.au/health-information/fact-sheets"
+    }
+  },
+  "hazards": {
+    "listeria": "Bacteria that can pass to the baby and cause miscarriage, stillbirth or premature birth. Uncommon but dangerous. Killed by heat, so cooking or reheating until steaming hot makes food safe.",
+    "salmonella": "Causes nausea, vomiting, diarrhoea and fever. In rare cases can cause miscarriage. Found in raw eggs, raw sesame products and undercooked meat.",
+    "toxoplasmosis": "Infection that can harm the baby's brain and eyes. Found in raw or undercooked meat, unwashed produce, raw shellfish, unpasteurised goat's milk and cat faeces.",
+    "mercury": "Some large fish have high mercury which can harm the baby's developing nervous system.",
+    "vitamin_a": "Retinol (a form of vitamin A) in large amounts may harm a developing baby. Liver and some non-pregnancy supplements are high in it.",
+    "alcohol": "No safe amount in pregnancy. Can cause miscarriage, stillbirth, premature birth and foetal alcohol syndrome.",
+    "caffeine": "Too much may increase the chance of miscarriage, premature birth or low birth weight. Limit to 200 mg a day.",
+    "general_food_poisoning": "Food left out, stored too long or made by someone unwell can carry germs."
+  },
+  "rules": [
+    {
+      "id": "meat-raw-undercooked",
+      "category": "meat_poultry",
+      "name": "Raw or undercooked meat and poultry",
+      "examples": [
+        "rare steak",
+        "medium-rare steak",
+        "beef tartare",
+        "carpaccio",
+        "pink chicken",
+        "raw mince",
+        "pink sausages"
+      ],
+      "match_terms": [
+        "rare",
+        "medium rare",
+        "medium-rare",
+        "tartare",
+        "carpaccio",
+        "raw beef",
+        "raw meat",
+        "pink",
+        "blue steak",
+        "kibbeh nayeh",
+        "yukhoe"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": "Cooked thoroughly with no pink left (mince, sausages) and clear juices (chicken, pork).",
+      "reason": "Raw and undercooked meat can carry toxoplasmosis and salmonella.",
+      "hazards": [
+        "toxoplasmosis",
+        "salmonella"
+      ],
+      "ask_restaurant": "Ask for it well done / cooked right through.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 4,
+          "says": "Don't eat raw or undercooked meat."
+        },
+        {
+          "doc": "nsw",
+          "page": 12,
+          "says": "Raw meat, raw chicken, other poultry, beef, pork: DON'T EAT."
+        },
+        {
+          "doc": "nsw",
+          "page": 10,
+          "says": "No pink left in mince or sausages; clear juices for chicken or pork."
+        }
+      ],
+      "conflict": "steak-doneness"
+    },
+    {
+      "id": "meat-cooked-thoroughly",
+      "category": "meat_poultry",
+      "name": "Thoroughly cooked meat (beef, lamb, pork, mince)",
+      "examples": [
+        "well-done steak",
+        "roast lamb",
+        "spaghetti bolognese",
+        "cooked sausages",
+        "pork chops"
+      ],
+      "match_terms": [
+        "well done",
+        "roast",
+        "braised",
+        "stewed",
+        "slow cooked",
+        "bolognese",
+        "curry",
+        "casserole",
+        "grilled",
+        "sausage",
+        "burger",
+        "meatballs"
+      ],
+      "rating": "amber",
+      "caveat": "Cooked right through and eaten hot. NSW gives at least 71°C. Leftovers into the fridge promptly, eaten within a day and reheated until steaming hot.",
+      "safe_if": null,
+      "reason": "Thorough cooking kills toxoplasmosis and salmonella. Fully cooked meat is also a good source of iron.",
+      "hazards": [
+        "toxoplasmosis",
+        "salmonella"
+      ],
+      "ask_restaurant": "Ask for it well done. For burgers, check there is no pink in the middle.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 4,
+          "says": "Thoroughly cooked meat and chicken. Leftovers in fridge, use within 24 hours, reheat thoroughly."
+        },
+        {
+          "doc": "nsw",
+          "page": 12,
+          "says": "Beef, pork, chicken, mince: cook thoroughly to at least 71°C (medium), eat while hot."
+        }
+      ],
+      "conflict": "steak-doneness"
+    },
+    {
+      "id": "chicken-home-cooked",
+      "category": "meat_poultry",
+      "name": "Freshly cooked chicken and poultry (served hot)",
+      "examples": [
+        "roast chicken",
+        "chicken curry",
+        "grilled chicken",
+        "chicken stir fry",
+        "roast turkey"
+      ],
+      "match_terms": [
+        "chicken",
+        "turkey",
+        "duck",
+        "poultry",
+        "roast chicken"
+      ],
+      "rating": "amber",
+      "caveat": "Cooked thoroughly (NSW: at least 74°C, clear juices) and eaten while hot. Leftovers in the fridge within 2 hours, reheated until steaming hot and eaten within a day.",
+      "safe_if": null,
+      "reason": "Cooking kills salmonella and listeria. Cold chicken is a separate, high-risk item.",
+      "hazards": [
+        "salmonella",
+        "listeria"
+      ],
+      "ask_restaurant": "Check it is freshly cooked and served hot, not cold or pre-sliced.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 4,
+          "says": "Thoroughly cooked chicken is safe."
+        },
+        {
+          "doc": "nsw",
+          "page": 12,
+          "says": "Home-cooked chicken: cook thoroughly to at least 74°C and eat while hot."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "chicken-hot-takeaway",
+      "category": "meat_poultry",
+      "name": "Hot takeaway / BBQ chicken",
+      "examples": [
+        "supermarket hot roast chicken",
+        "charcoal chicken",
+        "rotisserie chicken"
+      ],
+      "match_terms": [
+        "bbq chicken",
+        "barbecue chicken",
+        "rotisserie",
+        "charcoal chicken",
+        "hot chicken",
+        "roast chicken"
+      ],
+      "rating": "amber",
+      "caveat": "Only if freshly cooked and still hot. Refrigerate leftovers within 2 hours, reheat until steaming hot, and eat within 24 hours.",
+      "safe_if": null,
+      "reason": "Freshly cooked, hot chicken is safe. Once it cools and sits, listeria can grow.",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": "Ask for one freshly cooked and still hot.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 4,
+          "says": "Hot takeaway chicken is safe if freshly cooked and still hot."
+        },
+        {
+          "doc": "nsw",
+          "page": 12,
+          "says": "Purchase freshly cooked and eat while hot. Leftovers reheated to at least 60°C, use within a day."
+        }
+      ],
+      "conflict": "reheat-temperature"
+    },
+    {
+      "id": "chicken-cold",
+      "category": "meat_poultry",
+      "name": "Cold cooked chicken or turkey",
+      "examples": [
+        "chicken sandwich",
+        "chicken wrap",
+        "chicken caesar salad",
+        "sliced turkey",
+        "chicken loaf",
+        "pre-cooked chicken strips"
+      ],
+      "match_terms": [
+        "cold chicken",
+        "sliced chicken",
+        "shredded chicken",
+        "chicken loaf",
+        "pressed chicken",
+        "turkey breast",
+        "sliced turkey",
+        "pre-cooked chicken",
+        "chicken sandwich",
+        "chicken wrap"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": "Reheated until steaming hot and eaten straight away.",
+      "reason": "Cold, ready-to-eat chicken is a common source of listeria.",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": "Ask if the chicken can be freshly cooked and served hot, or pick a hot dish instead.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 2,
+          "says": "Avoid cold, cooked chicken unless heated to a high temperature."
+        },
+        {
+          "doc": "rwh",
+          "page": 4,
+          "says": "Don't eat cold meats, chicken or turkey from sandwich shops and cafes."
+        },
+        {
+          "doc": "nsw",
+          "page": 12,
+          "says": "Cold chicken or turkey, e.g. used in sandwich bars: DON'T EAT."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "deli-meats-cold",
+      "category": "meat_poultry",
+      "name": "Cold deli / processed meats",
+      "examples": [
+        "ham",
+        "salami",
+        "prosciutto",
+        "pastrami",
+        "luncheon meat",
+        "devon",
+        "mortadella",
+        "chorizo (uncooked, sliced)",
+        "pepperoni (cold)",
+        "corned beef (cold)"
+      ],
+      "match_terms": [
+        "ham",
+        "salami",
+        "prosciutto",
+        "pastrami",
+        "luncheon",
+        "devon",
+        "mortadella",
+        "pepperoni",
+        "chorizo",
+        "cold cuts",
+        "deli meat",
+        "smallgoods",
+        "coppa",
+        "bresaola",
+        "jamon",
+        "corned beef",
+        "silverside",
+        "kabana",
+        "cabanossi"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": "Cooked until steaming hot (NSW: at least 75°C) and eaten soon after, e.g. on a hot pizza.",
+      "reason": "Ready-to-eat meats can carry listeria. Freshly sliced deli meat is not safer than packaged because the slicer can be contaminated.",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": "Ask for the meat to be cooked hot (e.g. on a pizza or in a toastie heated through), or leave it out.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 4,
+          "says": "Don't eat packaged or unpackaged ready-to-eat meats such as ham and salami unless reheated and steaming hot. Freshly sliced is not safer."
+        },
+        {
+          "doc": "nsw",
+          "page": 12,
+          "says": "Ham, salami, luncheon, chicken meat: DON'T EAT unless cooked to at least 75°C and eaten soon afterwards."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "deli-meats-hot",
+      "category": "meat_poultry",
+      "name": "Processed meats cooked hot (e.g. on pizza)",
+      "examples": [
+        "ham and pineapple pizza",
+        "pepperoni pizza",
+        "hot ham toastie",
+        "bacon (cooked crisp)"
+      ],
+      "match_terms": [
+        "pizza",
+        "toastie",
+        "toasted",
+        "baked",
+        "bacon"
+      ],
+      "rating": "amber",
+      "caveat": "Must be cooked until steaming hot (NSW: at least 75°C) and eaten soon afterwards.",
+      "safe_if": null,
+      "reason": "Heat kills listeria.",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": "Make sure it comes out piping hot.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 4,
+          "says": "Processed meats are safe if thoroughly cooked, steaming hot and eaten soon afterwards, like on a pizza."
+        },
+        {
+          "doc": "nsw",
+          "page": 12,
+          "says": "DON'T EAT unless thoroughly cooked to at least 75°C and eaten soon afterwards."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "pate-refrigerated",
+      "category": "meat_poultry",
+      "name": "Refrigerated pâté and meat spreads",
+      "examples": [
+        "chicken liver pâté",
+        "duck pâté",
+        "terrine",
+        "rillettes",
+        "fresh meat paste"
+      ],
+      "match_terms": [
+        "pate",
+        "pâté",
+        "terrine",
+        "rillettes",
+        "meat spread",
+        "liverwurst",
+        "parfait"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": null,
+      "reason": "Pâté that needs to be kept in the fridge is a high listeria risk.",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": "Leave off the pâté (common on banh mi and charcuterie boards).",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 4,
+          "says": "Avoid pâté that needs refrigeration before opening."
+        },
+        {
+          "doc": "nsw",
+          "page": 12,
+          "says": "Refrigerated pâté or meat spreads: DON'T EAT."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "pate-shelf-stable",
+      "category": "meat_poultry",
+      "name": "Canned or jarred pâté / meat or fish paste (shelf-stable)",
+      "examples": [
+        "tinned pâté",
+        "jarred fish paste",
+        "canned meat paste"
+      ],
+      "match_terms": [
+        "canned pate",
+        "tinned pate",
+        "fish paste",
+        "meat paste"
+      ],
+      "rating": "amber",
+      "caveat": "Only shelf-stable cans or jars (stored at room temperature before opening). Refrigerate after opening.",
+      "safe_if": null,
+      "reason": "Canning makes it safe until opened.",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": null,
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 4,
+          "says": "Pâté, meat paste or fish pastes in cans or jars are safe at room temperature until opened."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "liver",
+      "category": "meat_poultry",
+      "name": "Liver",
+      "examples": [
+        "lamb's fry",
+        "chicken livers",
+        "beef liver",
+        "liver and onions"
+      ],
+      "match_terms": [
+        "liver",
+        "lamb's fry",
+        "lambs fry",
+        "chicken livers",
+        "foie"
+      ],
+      "rating": "amber",
+      "caveat": "No more than 50 g a week, and cooked thoroughly.",
+      "safe_if": null,
+      "limit": {
+        "amount": 50,
+        "unit": "g",
+        "per": "week"
+      },
+      "reason": "Liver is very high in retinol (a form of vitamin A), which may harm a developing baby.",
+      "hazards": [
+        "vitamin_a"
+      ],
+      "ask_restaurant": null,
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 1,
+          "says": "Limit liver to very small amounts, no more than 50 grams a week."
+        },
+        {
+          "doc": "rwh",
+          "page": 4,
+          "says": "Limit liver to 50 grams per week due to high vitamin A (retinol)."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "stuffing-in-bird",
+      "category": "meat_poultry",
+      "name": "Stuffing cooked inside chicken or poultry",
+      "examples": [
+        "roast chicken stuffing",
+        "turkey stuffing"
+      ],
+      "match_terms": [
+        "stuffing",
+        "stuffed chicken",
+        "stuffed turkey",
+        "seasoning"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": "Cooked separately (not inside the bird) and eaten hot.",
+      "reason": "NSW says stuffing should only be eaten if cooked separately from the bird and eaten hot (no reason given; it sits in the raw-poultry risk group).",
+      "hazards": [
+        "salmonella",
+        "general_food_poisoning"
+      ],
+      "ask_restaurant": "Ask if the stuffing is cooked separately.",
+      "sources": [
+        {
+          "doc": "nsw",
+          "page": 12,
+          "says": "Stuffing from chicken or poultry: DON'T EAT unless cooked separately and eaten hot."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "fish-cooked",
+      "category": "seafood",
+      "name": "Freshly cooked fish (most types)",
+      "examples": [
+        "salmon fillet",
+        "barramundi",
+        "snapper",
+        "fish and chips",
+        "grilled fish",
+        "fish curry"
+      ],
+      "match_terms": [
+        "fish",
+        "salmon",
+        "barramundi",
+        "snapper",
+        "whiting",
+        "bream",
+        "flathead",
+        "cod",
+        "basa",
+        "hoki",
+        "trout",
+        "tilapia",
+        "dory",
+        "fish and chips"
+      ],
+      "rating": "green",
+      "caveat": "Freshly cooked right through (NSW: at least 63°C) and eaten hot. Recommended 2 to 3 serves (150 g each) a week (RWH says 1 to 3). Leftovers in the fridge, reheated until steaming hot, eaten within a day.",
+      "safe_if": null,
+      "limit": {
+        "amount": 3,
+        "unit": "serves",
+        "per": "week",
+        "serve_size_g": 150,
+        "note": "Recommended range: RWH 1-3, NSW 2-3 serves a week."
+      },
+      "reason": "Fish gives omega-3 and iodine for the baby's brain and nervous system. Cooking kills listeria.",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": "Check it is cooked through, not seared or rare.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 1,
+          "says": "1 to 3 serves of fish each week recommended."
+        },
+        {
+          "doc": "rwh",
+          "page": 5,
+          "says": "Freshly cooked fish are safe. Serve is 150 g."
+        },
+        {
+          "doc": "nsw",
+          "page": 9,
+          "says": "Eat 2-3 serves per week of any fish and seafood not on the high-mercury list. 1 serve = 150 g."
+        },
+        {
+          "doc": "nsw",
+          "page": 12,
+          "says": "Cook thoroughly to at least 63°C and eat while hot."
+        }
+      ],
+      "conflict": "fish-serves"
+    },
+    {
+      "id": "fish-high-mercury-fortnightly",
+      "category": "seafood",
+      "name": "Shark (flake) and billfish: swordfish, broadbill, marlin",
+      "examples": [
+        "flake and chips",
+        "swordfish steak",
+        "marlin"
+      ],
+      "match_terms": [
+        "shark",
+        "flake",
+        "swordfish",
+        "broadbill",
+        "marlin",
+        "billfish"
+      ],
+      "rating": "amber",
+      "caveat": "No more than one serve (150 g) a fortnight, and no other fish at all in that fortnight.",
+      "safe_if": null,
+      "limit": {
+        "amount": 1,
+        "unit": "serve",
+        "per": "fortnight",
+        "serve_size_g": 150,
+        "exclusive": true
+      },
+      "reason": "These fish have high mercury, which can harm the baby's developing nervous system.",
+      "hazards": [
+        "mercury"
+      ],
+      "ask_restaurant": "Ask what fish is used. 'Flake' in fish and chips is shark. Choose another fish if you've had fish this fortnight.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 1,
+          "says": "Shark (flake), marlin, broadbill, swordfish have high mercury."
+        },
+        {
+          "doc": "rwh",
+          "page": 5,
+          "says": "Limit to once a fortnight and don't eat any other fish during that time."
+        },
+        {
+          "doc": "nsw",
+          "page": 9,
+          "says": "1 serve per fortnight of shark (flake) or billfish, and no other fish."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "fish-high-mercury-weekly",
+      "category": "seafood",
+      "name": "Orange roughy (deep sea perch) and catfish",
+      "examples": [
+        "orange roughy",
+        "deep sea perch",
+        "catfish"
+      ],
+      "match_terms": [
+        "orange roughy",
+        "sea perch",
+        "deep sea perch",
+        "catfish"
+      ],
+      "rating": "amber",
+      "caveat": "No more than one serve (150 g) a week, and no other fish that week.",
+      "safe_if": null,
+      "limit": {
+        "amount": 1,
+        "unit": "serve",
+        "per": "week",
+        "serve_size_g": 150,
+        "exclusive": true
+      },
+      "reason": "These fish have high mercury.",
+      "hazards": [
+        "mercury"
+      ],
+      "ask_restaurant": "Ask what fish is used.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 5,
+          "says": "Limit orange roughy (sea perch) and catfish to once a week, and no other fish during that time."
+        },
+        {
+          "doc": "nsw",
+          "page": 9,
+          "says": "1 serve per week of catfish or orange roughy (deep sea perch), and no other fish."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "fish-canned",
+      "category": "seafood",
+      "name": "Canned fish and seafood",
+      "examples": [
+        "tinned tuna",
+        "tinned salmon",
+        "sardines",
+        "canned smoked oysters",
+        "canned mussels",
+        "anchovies (canned)"
+      ],
+      "match_terms": [
+        "canned tuna",
+        "tinned tuna",
+        "tuna",
+        "canned salmon",
+        "sardines",
+        "canned",
+        "tinned",
+        "smoked oysters",
+        "smoked mussels"
+      ],
+      "rating": "green",
+      "caveat": "Once opened, store leftovers covered in the fridge (NSW: use within a day).",
+      "safe_if": null,
+      "reason": "Canning kills listeria. Snack-size tins of tuna and salmon are less than half a serve, so several a week is fine.",
+      "hazards": [],
+      "ask_restaurant": null,
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 1,
+          "says": "Snack sized tins of tuna and salmon have less than half a serve and are safe to eat several times a week."
+        },
+        {
+          "doc": "rwh",
+          "page": 5,
+          "says": "Canned seafood including smoked oysters and mussels is safe."
+        },
+        {
+          "doc": "nsw",
+          "page": 12,
+          "says": "Canned foods: store unused portions in the fridge in clean, sealed containers and use within a day."
+        }
+      ],
+      "conflict": "opened-cans"
+    },
+    {
+      "id": "seafood-cooked-shellfish",
+      "category": "seafood",
+      "name": "Freshly cooked shellfish and crustaceans",
+      "examples": [
+        "garlic prawns (cooked to order)",
+        "lobster",
+        "crab",
+        "cooked mussels",
+        "cooked scallops",
+        "calamari"
+      ],
+      "match_terms": [
+        "prawns",
+        "shrimp",
+        "lobster",
+        "crab",
+        "mussels",
+        "scallops",
+        "calamari",
+        "squid",
+        "octopus",
+        "bugs",
+        "clams",
+        "yabbies"
+      ],
+      "rating": "amber",
+      "caveat": "Must be freshly cooked right through and eaten hot. Not pre-cooked cold prawns.",
+      "safe_if": null,
+      "reason": "Shellfish are low in mercury and safe when freshly cooked. Raw or pre-cooked chilled shellfish can carry listeria or toxoplasmosis.",
+      "hazards": [
+        "listeria",
+        "toxoplasmosis"
+      ],
+      "ask_restaurant": "Ask whether prawns are cooked to order or pre-cooked and chilled.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 1,
+          "says": "Shellfish and crustaceans generally have lower mercury."
+        },
+        {
+          "doc": "rwh",
+          "page": 5,
+          "says": "Freshly cooked seafood such as shellfish and crustaceans, e.g. prawns, lobster, is safe."
+        },
+        {
+          "doc": "nsw",
+          "page": 12,
+          "says": "Cooked fish and seafood: cook to at least 63°C, eat while hot."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "prawns-precooked",
+      "category": "seafood",
+      "name": "Pre-cooked chilled prawns",
+      "examples": [
+        "prawn cocktail",
+        "cold prawns from the deli",
+        "seafood platter (cold)",
+        "prawn sandwich"
+      ],
+      "match_terms": [
+        "cooked prawns",
+        "chilled prawns",
+        "prawn cocktail",
+        "cold prawns",
+        "peeled prawns",
+        "seafood platter",
+        "prawn salad"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": "Cooked again until steaming hot and eaten straight away (they are then freshly cooked seafood).",
+      "reason": "They may not be freshly cooked and can carry listeria.",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": "Ask for prawns cooked fresh and served hot.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 2,
+          "says": "Avoid pre-cooked prawns."
+        },
+        {
+          "doc": "rwh",
+          "page": 5,
+          "says": "Avoid pre-cooked prawns as they may not be freshly cooked."
+        },
+        {
+          "doc": "nsw",
+          "page": 12,
+          "says": "Ready-to-eat chilled peeled prawns: DON'T EAT."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "seafood-raw",
+      "category": "seafood",
+      "name": "Raw fish and seafood",
+      "examples": [
+        "sashimi",
+        "raw oysters",
+        "ceviche",
+        "poke (raw)",
+        "tuna tartare",
+        "raw clams",
+        "crudo"
+      ],
+      "match_terms": [
+        "sashimi",
+        "raw",
+        "oysters",
+        "natural oysters",
+        "ceviche",
+        "poke",
+        "tartare",
+        "crudo",
+        "carpaccio",
+        "kinilaw",
+        "raw clams"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": "Cooked thoroughly and eaten hot.",
+      "reason": "Raw seafood can carry listeria, and raw oysters, clams and mussels can carry toxoplasmosis.",
+      "hazards": [
+        "listeria",
+        "toxoplasmosis"
+      ],
+      "ask_restaurant": "Ask for the seafood cooked through, or choose a cooked option.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 2,
+          "says": "Avoid uncooked or smoked seafood."
+        },
+        {
+          "doc": "rwh",
+          "page": 5,
+          "says": "Avoid raw fish or seafood."
+        },
+        {
+          "doc": "nsw",
+          "page": 12,
+          "says": "Raw seafood: DON'T EAT."
+        },
+        {
+          "doc": "nsw",
+          "page": 8,
+          "says": "Don't eat raw oysters, clams or mussels (toxoplasmosis)."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "seafood-smoked-chilled",
+      "category": "seafood",
+      "name": "Smoked seafood (chilled, not canned)",
+      "examples": [
+        "smoked salmon",
+        "lox",
+        "gravlax",
+        "smoked trout",
+        "smoked salmon bagel",
+        "eggs benedict with salmon"
+      ],
+      "match_terms": [
+        "smoked salmon",
+        "lox",
+        "gravlax",
+        "gravadlax",
+        "smoked trout",
+        "cold smoked",
+        "hot smoked",
+        "smoked fish",
+        "smoked mackerel",
+        "smoked eel"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": "Canned smoked seafood is fine. Otherwise only if cooked into a hot dish until steaming hot.",
+      "reason": "Chilled smoked seafood is a listeria risk.",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": "Swap smoked salmon for bacon cooked crisp, or ask for it left off.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 2,
+          "says": "Avoid uncooked or smoked seafood."
+        },
+        {
+          "doc": "rwh",
+          "page": 5,
+          "says": "Avoid smoked seafood like smoked salmon, except if canned."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "sushi-raw-or-not-fresh",
+      "category": "seafood",
+      "name": "Sushi with raw or smoked seafood, or not freshly made",
+      "examples": [
+        "salmon nigiri",
+        "tuna roll (raw)",
+        "sashimi platter",
+        "smoked salmon roll",
+        "supermarket sushi",
+        "sushi train"
+      ],
+      "match_terms": [
+        "sushi",
+        "nigiri",
+        "maki",
+        "hand roll",
+        "sushi train",
+        "temaki",
+        "chirashi",
+        "sashimi"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": "RWH: freshly made sushi with no raw or smoked seafood (e.g. cooked chicken, cooked prawn, tinned tuna, egg cooked firm, vegetable). NSW: home-made only, no raw meat or seafood, eaten immediately. NSW says don't eat any store-bought sushi.",
+      "reason": "Raw and smoked seafood carry listeria, and sushi that sits around lets listeria grow.",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": "Ask for a roll made fresh in front of you with only cooked fillings (e.g. teriyaki chicken, cooked prawn, avocado, cucumber).",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 5,
+          "says": "Avoid sushi with raw or smoked seafood, or sushi that isn't freshly made. Freshly made sushi without raw or smoked seafood is fine."
+        },
+        {
+          "doc": "rwh",
+          "page": 7,
+          "says": "Eating out: avoid sushi containing raw or smoked seafood or that isn't freshly prepared."
+        },
+        {
+          "doc": "nsw",
+          "page": 12,
+          "says": "Store-bought sushi: DON'T EAT. Home-made: don't use raw meat or seafood, eat immediately."
+        }
+      ],
+      "conflict": "sushi-store-bought"
+    },
+    {
+      "id": "sushi-cooked-fresh",
+      "category": "seafood",
+      "name": "Freshly made sushi with only cooked fillings",
+      "examples": [
+        "teriyaki chicken roll made fresh",
+        "cooked prawn roll made fresh",
+        "avocado and cucumber roll",
+        "tinned tuna roll made at home"
+      ],
+      "match_terms": [
+        "vegetable roll",
+        "avocado roll",
+        "cucumber roll",
+        "teriyaki chicken roll",
+        "cooked tuna roll"
+      ],
+      "rating": "amber",
+      "caveat": "Not OK unless freshly made to order (or at home) with only cooked fillings and eaten straight away. Never from a display, sushi train or supermarket fridge, and no raw or smoked seafood. NSW says home-made only; RWH allows shop sushi if freshly made.",
+      "safe_if": null,
+      "reason": "Cooked fillings and fresh preparation keep listeria risk low.",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": "Ask for it made to order rather than from the display.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 5,
+          "says": "Freshly made sushi without raw or smoked seafood is fine."
+        },
+        {
+          "doc": "nsw",
+          "page": 12,
+          "says": "Home-made: don't use raw meat or seafood, eat immediately. Store-bought: DON'T EAT."
+        }
+      ],
+      "conflict": "sushi-store-bought",
+      "warning": true
+    },
+    {
+      "id": "cheese-soft-uncooked",
+      "category": "dairy",
+      "name": "Soft and semi-soft cheeses (not cooked)",
+      "examples": [
+        "brie",
+        "camembert",
+        "ricotta",
+        "feta",
+        "blue cheese",
+        "gorgonzola",
+        "bocconcini",
+        "fresh mozzarella",
+        "burrata",
+        "goat's cheese (soft)",
+        "haloumi (uncooked)"
+      ],
+      "match_terms": [
+        "brie",
+        "camembert",
+        "ricotta",
+        "feta",
+        "fetta",
+        "blue cheese",
+        "gorgonzola",
+        "roquefort",
+        "stilton",
+        "danish blue",
+        "bocconcini",
+        "burrata",
+        "fresh mozzarella",
+        "soft cheese",
+        "triple cream",
+        "goat's cheese",
+        "chevre",
+        "marinated feta"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": "Used in a cooked dish and heated until steaming hot (NSW: at least 75°C), eaten soon after, e.g. baked spinach and ricotta, hot cheese pizza.",
+      "reason": "Soft cheeses can carry listeria. Cooking kills it.",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": "Ask for the soft cheese to be left off a cold salad, or choose a dish where it is baked hot.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 2,
+          "says": "Some soft cheeses like brie, camembert, ricotta, feta and blue cheese, but soft cheeses in cooked dishes are safe."
+        },
+        {
+          "doc": "rwh",
+          "page": 5,
+          "says": "Avoid brie, camembert, ricotta, feta, blue cheese unless used in a cooked dish."
+        },
+        {
+          "doc": "nsw",
+          "page": 13,
+          "says": "Soft and semi-soft cheese, e.g. brie, camembert, ricotta, fetta, bocconcini and blue: DON'T EAT unless cooked to at least 75°C and eaten soon afterwards."
+        }
+      ],
+      "conflict": "soft-cheese-list"
+    },
+    {
+      "id": "cheese-soft-cooked",
+      "category": "dairy",
+      "name": "Soft cheese cooked in a hot dish",
+      "examples": [
+        "spinach and ricotta cannelloni",
+        "baked brie",
+        "spanakopita",
+        "hot pizza with feta",
+        "lasagne with ricotta"
+      ],
+      "match_terms": [
+        "baked",
+        "cannelloni",
+        "lasagne",
+        "spanakopita",
+        "pizza",
+        "gozleme"
+      ],
+      "rating": "amber",
+      "caveat": "Heated until steaming hot (NSW: at least 75°C) and eaten soon after cooking.",
+      "safe_if": null,
+      "reason": "Cooking kills listeria.",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": "Make sure it is served piping hot.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 2,
+          "says": "Soft cheeses in cooked dishes are safe."
+        },
+        {
+          "doc": "nsw",
+          "page": 13,
+          "says": "Thoroughly cooked to at least 75°C and eaten soon afterwards."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "cheese-hard",
+      "category": "dairy",
+      "name": "Hard cheese",
+      "examples": [
+        "cheddar",
+        "tasty",
+        "parmesan",
+        "edam",
+        "gouda",
+        "swiss"
+      ],
+      "match_terms": [
+        "cheddar",
+        "tasty cheese",
+        "parmesan",
+        "parmigiano",
+        "pecorino",
+        "edam",
+        "gouda",
+        "emmental",
+        "swiss cheese",
+        "jarlsberg",
+        "colby",
+        "hard cheese",
+        "grana padano"
+      ],
+      "rating": "green",
+      "caveat": "Keep in the fridge.",
+      "safe_if": null,
+      "reason": "Hard cheeses are low risk and a good calcium source.",
+      "hazards": [],
+      "ask_restaurant": null,
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 5,
+          "says": "Hard cheeses are safe."
+        },
+        {
+          "doc": "nsw",
+          "page": 13,
+          "says": "Hard cheese, e.g. cheddar, tasty: store in the fridge."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "cheese-processed-spreads-cottage-cream",
+      "category": "dairy",
+      "name": "Processed cheese, cheese spreads, cream cheese, cottage cheese",
+      "examples": [
+        "cheese slices",
+        "cream cheese",
+        "Philadelphia",
+        "cottage cheese",
+        "cheese spread",
+        "Laughing Cow"
+      ],
+      "match_terms": [
+        "processed cheese",
+        "cheese slices",
+        "cream cheese",
+        "cottage cheese",
+        "cheese spread",
+        "philadelphia",
+        "spreadable cheese"
+      ],
+      "rating": "amber",
+      "caveat": "Keep in the fridge and follow pack storage instructions. NSW: eat within two days of opening.",
+      "safe_if": null,
+      "reason": "These are made safely but listeria can grow if kept too long after opening.",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": null,
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 5,
+          "says": "Processed cheese, cream cheese, cheese spreads and cottage cheese (follow storage instructions) are safe."
+        },
+        {
+          "doc": "nsw",
+          "page": 13,
+          "says": "Store in the fridge, eat within two days of opening pack."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "cheese-paneer",
+      "category": "dairy",
+      "name": "Paneer",
+      "examples": [
+        "paneer",
+        "palak paneer",
+        "paneer tikka"
+      ],
+      "match_terms": [
+        "paneer"
+      ],
+      "rating": "green",
+      "caveat": null,
+      "safe_if": null,
+      "reason": "Listed as safe by RWH. (NSW does not mention paneer.)",
+      "hazards": [],
+      "ask_restaurant": null,
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 5,
+          "says": "Paneer is in the 'eat' list."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "dairy-pasteurised",
+      "category": "dairy",
+      "name": "Pasteurised milk, yoghurt, cream, buttermilk",
+      "examples": [
+        "milk",
+        "yoghurt",
+        "cream",
+        "buttermilk",
+        "sour cream"
+      ],
+      "match_terms": [
+        "milk",
+        "yoghurt",
+        "yogurt",
+        "cream",
+        "buttermilk",
+        "pasteurised",
+        "pasteurized",
+        "kefir",
+        "sour cream"
+      ],
+      "rating": "green",
+      "caveat": "Check 'best before' / 'use-by' dates and follow storage instructions.",
+      "safe_if": null,
+      "reason": "Pasteurisation kills bacteria. Dairy is a key calcium source (2.5 serves a day recommended).",
+      "hazards": [],
+      "ask_restaurant": null,
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 5,
+          "says": "Milk, yoghurt, cream, buttermilk are safe."
+        },
+        {
+          "doc": "nsw",
+          "page": 13,
+          "says": "Pasteurised milk, cream, yoghurt: check dates and follow storage instructions."
+        },
+        {
+          "doc": "nsw",
+          "page": 6,
+          "says": "2.5 serves of dairy a day meets calcium needs (3.5 if 18 or under)."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "dairy-unpasteurised",
+      "category": "dairy",
+      "name": "Unpasteurised (raw) milk and dairy",
+      "examples": [
+        "raw milk",
+        "unpasteurised goat's milk",
+        "raw milk cheese",
+        "farm milk"
+      ],
+      "match_terms": [
+        "unpasteurised",
+        "unpasteurized",
+        "raw milk",
+        "bath milk",
+        "cosmetic milk",
+        "raw goat milk",
+        "goat's milk",
+        "raw milk cheese"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": null,
+      "reason": "Unpasteurised dairy can carry listeria, and unpasteurised goat's milk can carry toxoplasmosis.",
+      "hazards": [
+        "listeria",
+        "toxoplasmosis"
+      ],
+      "ask_restaurant": "Ask if the cheese or milk is pasteurised.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 5,
+          "says": "Avoid unpasteurised milk and dairy foods."
+        },
+        {
+          "doc": "nsw",
+          "page": 13,
+          "says": "Unpasteurised (raw) dairy: DON'T DRINK OR USE."
+        },
+        {
+          "doc": "nsw",
+          "page": 8,
+          "says": "Don't drink unpasteurised goat's milk (toxoplasmosis)."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "ice-cream-soft-serve",
+      "category": "dairy",
+      "name": "Soft serve ice-cream (and shakes/smoothies made with it)",
+      "examples": [
+        "soft serve cone",
+        "McFlurry",
+        "sundae",
+        "thickshake from soft serve",
+        "frozen yoghurt from a machine"
+      ],
+      "match_terms": [
+        "soft serve",
+        "soft-serve",
+        "sundae",
+        "mcflurry",
+        "thickshake",
+        "frozen yoghurt",
+        "froyo",
+        "cone",
+        "blizzard"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": null,
+      "reason": "The dispensing machine may not be thoroughly cleaned, which is a listeria risk.",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": "Choose packaged or scooped ice-cream instead.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 5,
+          "says": "Avoid soft serve ice-cream and smoothies made with it, because the machine may not be thoroughly cleaned."
+        },
+        {
+          "doc": "nsw",
+          "page": 13,
+          "says": "Soft serve: DON'T EAT."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "ice-cream-fried",
+      "category": "dairy",
+      "name": "Fried ice-cream",
+      "examples": [
+        "fried ice-cream"
+      ],
+      "match_terms": [
+        "fried ice cream",
+        "fried ice-cream"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": null,
+      "reason": "NSW lists fried ice-cream as do-not-eat (it gives no reason; it sits with soft serve under listeria-risk dairy).",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": null,
+      "sources": [
+        {
+          "doc": "nsw",
+          "page": 13,
+          "says": "Fried ice-cream: DON'T EAT."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "ice-cream-packaged",
+      "category": "dairy",
+      "name": "Packaged frozen ice-cream (not soft serve)",
+      "examples": [
+        "tub ice-cream",
+        "ice-cream on a stick",
+        "gelato from a sealed tub"
+      ],
+      "match_terms": [
+        "ice cream",
+        "ice-cream",
+        "gelato",
+        "frozen dessert"
+      ],
+      "rating": "green",
+      "caveat": "Keep frozen and eat frozen.",
+      "safe_if": null,
+      "reason": "Packaged ice-cream kept frozen is safe.",
+      "hazards": [],
+      "ask_restaurant": null,
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 5,
+          "says": "Ice-cream (not soft serve) is safe."
+        },
+        {
+          "doc": "nsw",
+          "page": 13,
+          "says": "Packaged frozen ice-cream: keep and eat frozen."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "custard",
+      "category": "dairy",
+      "name": "Custard",
+      "examples": [
+        "store-bought custard",
+        "home-made custard",
+        "creme anglaise",
+        "custard tart"
+      ],
+      "match_terms": [
+        "custard",
+        "creme anglaise",
+        "crème anglaise",
+        "creme patissiere"
+      ],
+      "rating": "amber",
+      "caveat": "Store-bought: fine cold if freshly opened, then refrigerate, reheat until hot and use within a day. Home-made: cook thoroughly (NSW: at least 71°C), eat hot, reheat until hot and use within a day.",
+      "safe_if": null,
+      "reason": "Custard is egg and milk based. Fine when fresh or well cooked, risky once it sits.",
+      "hazards": [
+        "salmonella",
+        "listeria"
+      ],
+      "ask_restaurant": null,
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 5,
+          "says": "Custard is in the 'eat' list."
+        },
+        {
+          "doc": "nsw",
+          "page": 13,
+          "says": "Store-bought: can be eaten cold if freshly opened; use within a day. Home-made: cook to at least 71°C, eat while hot."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "eggs-cooked",
+      "category": "eggs",
+      "name": "Thoroughly cooked eggs",
+      "examples": [
+        "hard-boiled egg",
+        "scrambled eggs (firm)",
+        "fried egg (yolk set)",
+        "quiche",
+        "frittata",
+        "omelette"
+      ],
+      "match_terms": [
+        "hard boiled",
+        "hard-boiled",
+        "scrambled",
+        "omelette",
+        "frittata",
+        "quiche",
+        "fried egg",
+        "egg"
+      ],
+      "rating": "amber",
+      "caveat": "Cooked until the yolk thickens / is firm (NSW: at least 71°C). Don't use cracked or dirty eggs. Keep eggs in the fridge.",
+      "safe_if": null,
+      "reason": "Thorough cooking kills salmonella. Eggs are a good source of protein and iron.",
+      "hazards": [
+        "salmonella"
+      ],
+      "ask_restaurant": "Ask for eggs cooked hard / yolk fully set.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 6,
+          "says": "Eggs cooked thoroughly until the yolk thickens."
+        },
+        {
+          "doc": "rwh",
+          "page": 2,
+          "says": "Avoid eggs with cracked shells."
+        },
+        {
+          "doc": "nsw",
+          "page": 13,
+          "says": "Cooked egg dishes: cook thoroughly to at least 71°C. Don't use cracked or dirty eggs."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "eggs-raw-runny",
+      "category": "eggs",
+      "name": "Raw or runny eggs",
+      "examples": [
+        "soft-boiled egg",
+        "poached egg (runny)",
+        "sunny side up",
+        "eggs benedict",
+        "dippy eggs",
+        "raw egg in drinks"
+      ],
+      "match_terms": [
+        "soft boiled",
+        "soft-boiled",
+        "runny",
+        "poached",
+        "sunny side",
+        "over easy",
+        "eggs benedict",
+        "eggs florentine",
+        "eggs royale",
+        "jammy egg",
+        "onsen egg",
+        "ramen egg",
+        "raw egg",
+        "dippy"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": "Cooked until the yolk is firm.",
+      "reason": "Raw and undercooked eggs can carry salmonella.",
+      "hazards": [
+        "salmonella"
+      ],
+      "ask_restaurant": "Ask for eggs cooked hard (yolk fully set), and for hollandaise to be left off.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 2,
+          "says": "Don't eat raw or undercooked (runny) eggs."
+        },
+        {
+          "doc": "rwh",
+          "page": 6,
+          "says": "Avoid raw or runny eggs."
+        },
+        {
+          "doc": "nsw",
+          "page": 7,
+          "says": "Avoid foods that contain raw egg; always cook eggs thoroughly."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "raw-egg-foods",
+      "category": "eggs",
+      "name": "Foods that may contain raw egg",
+      "examples": [
+        "home-made or cafe mayonnaise",
+        "aioli",
+        "chocolate mousse",
+        "tiramisu",
+        "eggnog",
+        "restaurant Caesar salad / dressing",
+        "hollandaise",
+        "béarnaise",
+        "raw cake batter",
+        "pancake batter",
+        "raw cookie dough"
+      ],
+      "match_terms": [
+        "aioli",
+        "house mayo",
+        "house-made mayonnaise",
+        "homemade mayonnaise",
+        "mousse",
+        "tiramisu",
+        "eggnog",
+        "caesar",
+        "hollandaise",
+        "bearnaise",
+        "béarnaise",
+        "cake batter",
+        "cookie dough",
+        "pancake batter",
+        "zabaglione",
+        "meringue (soft)",
+        "pavlova (soft centre)"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": "Made with store-bought, shelf-stable mayonnaise/aioli, or cooked thoroughly.",
+      "reason": "Raw egg can carry salmonella.",
+      "hazards": [
+        "salmonella"
+      ],
+      "ask_restaurant": "Ask if the aioli, mayo or dressing is made in-house with raw egg. If so, ask for it on the side or swapped for a non-egg sauce.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 6,
+          "says": "Avoid foods that may contain raw eggs: mousse, eggnog, home-made mayonnaise, aioli, Caesar salads in restaurants, uncooked cake batter."
+        },
+        {
+          "doc": "rwh",
+          "page": 6,
+          "says": "Avoid homemade and cafe-made mayonnaise which may contain raw eggs."
+        },
+        {
+          "doc": "nsw",
+          "page": 13,
+          "says": "Raw egg in food, e.g. home-made mayonnaise, aioli, chocolate mousse, cake batter, pancake batter: DON'T EAT."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "mayo-commercial",
+      "category": "eggs",
+      "name": "Store-bought mayonnaise and aioli (commercial)",
+      "examples": [
+        "jar mayonnaise",
+        "squeeze bottle aioli",
+        "Best Foods",
+        "Praise"
+      ],
+      "match_terms": [
+        "mayonnaise",
+        "mayo",
+        "aioli"
+      ],
+      "rating": "amber",
+      "caveat": "Commercial jar/bottle only. Refrigerate after opening and follow storage instructions; check use-by / best-before dates.",
+      "safe_if": null,
+      "reason": "Commercial mayonnaise is made to be safe. Home-made or cafe-made may use raw egg.",
+      "hazards": [
+        "salmonella"
+      ],
+      "ask_restaurant": "Ask whether the mayo is house-made or from a commercial jar.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 6,
+          "says": "Store-bought mayonnaise is safe if kept in the fridge and storage instructions followed."
+        },
+        {
+          "doc": "nsw",
+          "page": 13,
+          "says": "Non-refrigerated commercial mayonnaise, aioli: check dates, follow storage instructions."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "dips-soft-cheese",
+      "category": "dips_spreads",
+      "name": "Dips containing feta or ricotta",
+      "examples": [
+        "whipped feta",
+        "feta dip",
+        "ricotta dip",
+        "tirokafteri",
+        "spinach and feta dip (cold)"
+      ],
+      "match_terms": [
+        "whipped feta",
+        "feta dip",
+        "ricotta dip",
+        "tirokafteri",
+        "cheese dip"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": null,
+      "reason": "Uncooked soft cheese carries a listeria risk.",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": "Ask if the dip contains feta or ricotta.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 6,
+          "says": "Avoid dips that contain feta or ricotta cheese."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "sesame-raw-products",
+      "category": "dips_spreads",
+      "name": "Raw sesame products: tahini, hummus, halva, sesame paste",
+      "examples": [
+        "hummus",
+        "tahini",
+        "halva",
+        "baba ganoush (with tahini)",
+        "tahini dressing",
+        "sesame paste"
+      ],
+      "match_terms": [
+        "hummus",
+        "houmous",
+        "humus",
+        "tahini",
+        "tahina",
+        "halva",
+        "halwa",
+        "sesame paste",
+        "baba ganoush",
+        "baba ghanoush",
+        "tarator",
+        "falafel wrap with tahini"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": null,
+      "reason": "Raw sesame products have been linked to salmonella.",
+      "hazards": [
+        "salmonella"
+      ],
+      "ask_restaurant": "Ask for no hummus or tahini sauce (common in kebabs, falafel, shawarma and Middle Eastern plates). Garlic sauce may also contain tahini, so ask.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 2,
+          "says": "Avoid raw sesame seeds and their products, including tahini, halva and hummus."
+        },
+        {
+          "doc": "rwh",
+          "page": 7,
+          "says": "Avoid sesame products made from ground or whole sesame seeds like tahini, halva and hummus."
+        },
+        {
+          "doc": "nsw",
+          "page": 12,
+          "says": "Hummus, tahini and any other sesame paste, store-bought or home-made: DON'T EAT."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "sesame-heated",
+      "category": "dips_spreads",
+      "name": "Heat-treated sesame: sesame oil, seeds baked on bread",
+      "examples": [
+        "sesame oil",
+        "sesame seed bun",
+        "sesame bagel",
+        "sesame chicken (cooked)"
+      ],
+      "match_terms": [
+        "sesame oil",
+        "sesame seeds",
+        "sesame bun",
+        "toasted sesame"
+      ],
+      "rating": "green",
+      "caveat": "Only when the sesame has been heated or baked.",
+      "safe_if": null,
+      "reason": "Heat treatment makes sesame safe.",
+      "hazards": [],
+      "ask_restaurant": null,
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 2,
+          "says": "Sesame seeds that have been heat treated are safe to eat."
+        },
+        {
+          "doc": "rwh",
+          "page": 7,
+          "says": "Sesame products that have been heated, like sesame oil and seeds on baked bread."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "salad-pre-prepared",
+      "category": "fruit_veg",
+      "name": "Pre-prepared or pre-packaged salads (incl. coleslaw and fruit salad)",
+      "examples": [
+        "bagged salad mix",
+        "salad bar",
+        "buffet salad",
+        "deli coleslaw",
+        "pre-made pasta salad",
+        "pre-cut fruit salad"
+      ],
+      "match_terms": [
+        "coleslaw",
+        "slaw",
+        "salad bar",
+        "pre-packaged salad",
+        "salad kit",
+        "fruit salad",
+        "potato salad",
+        "pasta salad",
+        "rice salad",
+        "smorgasbord",
+        "buffet"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": "Freshly made just before eating from well-washed ingredients.",
+      "reason": "Salads that sit around can grow listeria.",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": "Ask if the salad is made fresh to order. Avoid buffets and salad bars.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 2,
+          "says": "Avoid coleslaws, salads and fruit salads unless you're sure they're freshly prepared."
+        },
+        {
+          "doc": "rwh",
+          "page": 6,
+          "says": "Avoid pre-prepared salads from salad bars or smorgasbords."
+        },
+        {
+          "doc": "nsw",
+          "page": 13,
+          "says": "Pre-prepared or pre-packaged salads including fruit salad: DON'T EAT."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "salad-fresh-homemade",
+      "category": "fruit_veg",
+      "name": "Freshly made salad",
+      "examples": [
+        "home-made garden salad",
+        "salad made to order"
+      ],
+      "match_terms": [
+        "salad",
+        "garden salad",
+        "green salad",
+        "side salad"
+      ],
+      "rating": "amber",
+      "caveat": "Wash ingredients well just before making. No raw sprouts. Eat fresh; leftovers into the fridge and eaten within a day.",
+      "safe_if": null,
+      "reason": "Washing and eating fresh reduces listeria and toxoplasmosis risk.",
+      "hazards": [
+        "listeria",
+        "toxoplasmosis"
+      ],
+      "ask_restaurant": "Ask for no sprouts, no soft cheese, and no house-made egg dressing.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 6,
+          "says": "Freshly prepared salads, except those with raw alfalfa, bean sprouts or snow pea sprouts."
+        },
+        {
+          "doc": "nsw",
+          "page": 13,
+          "says": "Home-made: wash ingredients well just before making and eating; use leftovers within a day."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "sprouts",
+      "category": "fruit_veg",
+      "name": "Sprouts (bean sprouts, alfalfa, snow pea sprouts, etc.)",
+      "examples": [
+        "bean sprouts on pho",
+        "alfalfa in sandwiches",
+        "snow pea sprouts",
+        "mung bean sprouts",
+        "broccoli sprouts",
+        "pad thai garnish"
+      ],
+      "match_terms": [
+        "sprouts",
+        "bean sprouts",
+        "beansprouts",
+        "alfalfa",
+        "snow pea sprouts",
+        "mung bean",
+        "broccoli sprouts",
+        "radish sprouts",
+        "clover sprouts",
+        "sunflower sprouts",
+        "onion sprouts",
+        "soybean sprouts",
+        "microgreens"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": "Cooked thoroughly (NSW: not raw or lightly cooked).",
+      "reason": "Sprouts can carry salmonella and listeria.",
+      "hazards": [
+        "salmonella",
+        "listeria"
+      ],
+      "ask_restaurant": "Ask for no sprouts (common on pho, pad thai, banh mi, poke and sandwiches), or for them to be cooked in the dish.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 6,
+          "says": "Avoid sprouted seeds such as alfalfa, bean sprouts or snow pea sprouts unless thoroughly cooked."
+        },
+        {
+          "doc": "nsw",
+          "page": 7,
+          "says": "Don't eat any type of sprout, whether raw or lightly cooked."
+        },
+        {
+          "doc": "nsw",
+          "page": 13,
+          "says": "Bean sprouts: DON'T EAT raw or lightly cooked."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "veg-fresh",
+      "category": "fruit_veg",
+      "name": "Fresh vegetables and herbs",
+      "examples": [
+        "broccoli",
+        "spinach",
+        "carrots",
+        "herbs"
+      ],
+      "match_terms": [
+        "vegetables",
+        "veg",
+        "herbs",
+        "spinach",
+        "broccoli",
+        "kale",
+        "lettuce"
+      ],
+      "rating": "green",
+      "caveat": "Wash well before eating raw or cooking.",
+      "safe_if": null,
+      "reason": "Washing removes soil that can carry toxoplasmosis. Leafy greens are rich in folate and iron.",
+      "hazards": [
+        "toxoplasmosis"
+      ],
+      "ask_restaurant": null,
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 6,
+          "says": "Fresh cooked vegetables (wash before cooking)."
+        },
+        {
+          "doc": "nsw",
+          "page": 13,
+          "says": "Wash well just before eating raw, or wash before cooking."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "veg-canned-frozen",
+      "category": "fruit_veg",
+      "name": "Canned and frozen vegetables",
+      "examples": [
+        "frozen peas",
+        "frozen corn",
+        "frozen mixed veg",
+        "canned tomatoes",
+        "canned beans"
+      ],
+      "match_terms": [
+        "frozen vegetables",
+        "frozen peas",
+        "frozen corn",
+        "frozen spinach",
+        "canned vegetables",
+        "tinned tomatoes"
+      ],
+      "rating": "amber",
+      "caveat": "Frozen vegetables should be cooked, not eaten straight from frozen or uncooked (NSW). Canned: follow storage instructions after opening.",
+      "safe_if": null,
+      "reason": "Frozen vegetables are not a ready-to-eat food and can carry listeria if not cooked.",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": null,
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 6,
+          "says": "Canned and frozen vegetables are in the 'eat' list."
+        },
+        {
+          "doc": "nsw",
+          "page": 13,
+          "says": "Frozen vegetables: cook, don't eat uncooked."
+        }
+      ],
+      "conflict": "frozen-veg"
+    },
+    {
+      "id": "fruit-whole",
+      "category": "fruit_veg",
+      "name": "Whole fresh fruit",
+      "examples": [
+        "apple",
+        "banana",
+        "oranges",
+        "berries",
+        "mango"
+      ],
+      "match_terms": [
+        "fruit",
+        "apple",
+        "banana",
+        "orange",
+        "berries",
+        "grapes",
+        "mango",
+        "pear",
+        "kiwi"
+      ],
+      "rating": "green",
+      "caveat": "Wash before eating.",
+      "safe_if": null,
+      "reason": "All whole fruit is safe once washed.",
+      "hazards": [
+        "toxoplasmosis"
+      ],
+      "ask_restaurant": null,
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 6,
+          "says": "All types are safe except store-bought pre-cut fruit. Wash whole fruit before eating."
+        },
+        {
+          "doc": "nsw",
+          "page": 13,
+          "says": "Whole fresh fruits: wash well before eating."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "fruit-pre-cut",
+      "category": "fruit_veg",
+      "name": "Store-bought pre-cut fruit",
+      "examples": [
+        "fruit cups from the fridge",
+        "pre-cut melon",
+        "fruit platter",
+        "pre-cut pineapple"
+      ],
+      "match_terms": [
+        "pre-cut fruit",
+        "fruit cup",
+        "fruit platter",
+        "cut fruit",
+        "fruit salad",
+        "fruit tub"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": null,
+      "reason": "Pre-cut fruit can grow listeria, especially rockmelon.",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": "Avoid fruit platters or fruit salad unless cut fresh to order.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 6,
+          "says": "Avoid store-bought, pre-cut fruit, especially rockmelon."
+        },
+        {
+          "doc": "nsw",
+          "page": 13,
+          "says": "Pre-prepared or pre-packaged salads including fruit salad: DON'T EAT."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "rockmelon",
+      "category": "fruit_veg",
+      "name": "Rockmelon (cantaloupe), whole and cut at home",
+      "examples": [
+        "rockmelon",
+        "cantaloupe",
+        "melon in fruit salad"
+      ],
+      "match_terms": [
+        "rockmelon",
+        "rock melon",
+        "cantaloupe",
+        "canteloupe",
+        "muskmelon"
+      ],
+      "rating": "amber",
+      "caveat": "Not OK unless bought whole, the skin washed before cutting, cut at home and eaten fresh. Never pre-cut, from a fruit salad or platter, or from a cafe. NSW says avoid rockmelon altogether; RWH allows it this way.",
+      "safe_if": null,
+      "reason": "Rockmelon is a listeria risk, especially when pre-cut. The guides disagree on whole rockmelon, so it is only OK under these strict conditions.",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": "Ask for no rockmelon in fruit salads or platters.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 6,
+          "says": "Buy whole rockmelon and clean the skin before cutting. Avoid store-bought pre-cut fruit, especially rockmelon."
+        },
+        {
+          "doc": "nsw",
+          "page": 13,
+          "says": "Rockmelons: DON'T EAT."
+        }
+      ],
+      "conflict": "rockmelon",
+      "warning": true
+    },
+    {
+      "id": "juice-cafe",
+      "category": "drinks",
+      "name": "Freshly squeezed juices and smoothies from cafes / juice bars",
+      "examples": [
+        "juice bar smoothie",
+        "cafe fresh orange juice",
+        "cold-pressed juice from a bar"
+      ],
+      "match_terms": [
+        "fresh juice",
+        "freshly squeezed",
+        "smoothie",
+        "juice bar",
+        "cold pressed",
+        "cold-pressed"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": "Made at home from washed whole fruit and drunk straight away.",
+      "reason": "They use pre-cut fruit, and juicing machines can be hard to clean (listeria).",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": "Choose bottled pasteurised juice or a hot drink instead.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 6,
+          "says": "Avoid freshly squeezed juices and smoothies from cafes and juice bars because they use pre-cut fruit and machines can be hard to clean."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "sandwiches-pre-made",
+      "category": "eating_out",
+      "name": "Pre-prepared or pre-packaged sandwiches and wraps",
+      "examples": [
+        "servo sandwich",
+        "supermarket wrap",
+        "cafe display sandwich",
+        "airport sandwich"
+      ],
+      "match_terms": [
+        "sandwich",
+        "wrap",
+        "roll",
+        "sub",
+        "baguette",
+        "panini",
+        "banh mi"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": "Made fresh to order with safe fillings (no cold deli meat, cold chicken, soft cheese, sprouts or raw-egg mayo), or toasted until steaming hot.",
+      "reason": "Food made more than a day in advance can grow listeria, and common fillings are high-risk.",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": "Ask for it made fresh, or toasted until hot. Skip deli meats, cold chicken, soft cheese, sprouts and house mayo.",
+      "sources": [
+        {
+          "doc": "nsw",
+          "page": 7,
+          "says": "Avoid any foods that may have been made more than a day in advance, e.g. pre-made salads, sandwiches and wraps."
+        },
+        {
+          "doc": "nsw",
+          "page": 12,
+          "says": "Pre-prepared or pre-packaged sandwiches or wraps: DON'T EAT."
+        },
+        {
+          "doc": "rwh",
+          "page": 4,
+          "says": "Don't eat cold meats, chicken or turkey from sandwich shops and cafes."
+        }
+      ],
+      "conflict": "pre-made-sandwiches"
+    },
+    {
+      "id": "eating-out-hot-fresh",
+      "category": "eating_out",
+      "name": "Freshly cooked restaurant or takeaway food",
+      "examples": [
+        "curry cooked to order",
+        "stir fry",
+        "hot pasta",
+        "hot soup"
+      ],
+      "match_terms": [
+        "stir fry",
+        "curry",
+        "soup",
+        "pasta",
+        "noodles",
+        "fried rice"
+      ],
+      "rating": "amber",
+      "caveat": "Choose food that is freshly cooked and served steaming hot. Check the individual ingredients against the other rules.",
+      "safe_if": null,
+      "reason": "Hot, freshly cooked food has very low listeria risk.",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": "Ask that it is served piping hot.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 7,
+          "says": "Choose food that is freshly cooked and make sure hot food is steaming hot."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "buffets-pre-made",
+      "category": "eating_out",
+      "name": "Salad bars, smorgasbords, buffets and food stored for a long time",
+      "examples": [
+        "buffet",
+        "bain-marie food",
+        "salad bar",
+        "food court display"
+      ],
+      "match_terms": [
+        "buffet",
+        "smorgasbord",
+        "salad bar",
+        "bain marie",
+        "bain-marie",
+        "all you can eat",
+        "display"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": "Food cooked fresh and still steaming hot.",
+      "reason": "Food that sits out or has been stored a long time can grow listeria.",
+      "hazards": [
+        "listeria",
+        "general_food_poisoning"
+      ],
+      "ask_restaurant": "Choose dishes cooked to order.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 2,
+          "says": "Avoid refrigerated, ready-to-eat foods that may have been stored for a long time."
+        },
+        {
+          "doc": "rwh",
+          "page": 7,
+          "says": "Avoid pre-made food if you think it's been stored a long time, and salad bars and smorgasbords."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "leftovers",
+      "category": "storage",
+      "name": "Cooked leftovers",
+      "examples": [
+        "last night's dinner",
+        "meal prep"
+      ],
+      "match_terms": [
+        "leftovers",
+        "leftover",
+        "reheated",
+        "meal prep"
+      ],
+      "rating": "amber",
+      "caveat": "Refrigerate as soon as it stops steaming, covered. Eat within 24 hours (a day), reheated until steaming hot (RWH: 74°C for 2 minutes; NSW: at least 60°C). Or freeze and reheat later.",
+      "safe_if": null,
+      "reason": "Listeria can grow slowly in the fridge. Reheating until steaming hot kills it.",
+      "hazards": [
+        "listeria"
+      ],
+      "ask_restaurant": null,
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 2,
+          "says": "Cook or reheat until steaming hot, at least 74°C for 2 minutes, and eat straight away."
+        },
+        {
+          "doc": "rwh",
+          "page": 3,
+          "says": "Eat leftover foods within 24 hours and reheat them until steaming hot."
+        },
+        {
+          "doc": "nsw",
+          "page": 12,
+          "says": "Store leftovers covered in the fridge, eat within a day and always reheat to at least 60°C."
+        }
+      ],
+      "conflict": "reheat-temperature"
+    },
+    {
+      "id": "food-left-out",
+      "category": "storage",
+      "name": "Fridge food left out at room temperature",
+      "examples": [
+        "picnic food",
+        "party platters",
+        "lunchbox without ice pack"
+      ],
+      "match_terms": [
+        "left out",
+        "room temperature",
+        "platter",
+        "picnic"
+      ],
+      "rating": "amber",
+      "caveat": "Eat within 2 hours of coming out of the fridge. NSW: don't eat if it's been out 2 hours or more. RWH: preferably within 2 hours, definitely within 4; throw out at 4+ hours. App default follows NSW (2 hours).",
+      "safe_if": null,
+      "reason": "Bacteria grow quickly at room temperature.",
+      "hazards": [
+        "listeria",
+        "general_food_poisoning"
+      ],
+      "ask_restaurant": null,
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 2,
+          "says": "Eat fridge food as soon as possible, preferably within 2 hours and definitely within 4 hours. 4+ hours: throw it out."
+        },
+        {
+          "doc": "rwh",
+          "page": 7,
+          "says": "Eat cold foods within 4 hours of preparation, unless they've been refrigerated."
+        },
+        {
+          "doc": "nsw",
+          "page": 10,
+          "says": "Don't eat food that's meant to be in the fridge if it's been left out for two hours or more."
+        }
+      ],
+      "conflict": "time-out-of-fridge"
+    },
+    {
+      "id": "canned-bottled-foods",
+      "category": "storage",
+      "name": "Canned and bottled foods",
+      "examples": [
+        "tinned fruit",
+        "tinned beans",
+        "jarred sauces"
+      ],
+      "match_terms": [
+        "canned",
+        "tinned",
+        "jarred",
+        "bottled"
+      ],
+      "rating": "green",
+      "caveat": "After opening, store leftovers in a clean sealed container in the fridge (NSW: use within a day).",
+      "safe_if": null,
+      "reason": "Canning makes food safe until opened.",
+      "hazards": [],
+      "ask_restaurant": null,
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 7,
+          "says": "All are safe, just follow the storage instructions after opening."
+        },
+        {
+          "doc": "nsw",
+          "page": 12,
+          "says": "Store unused portions in the fridge in clean, sealed containers and use within a day."
+        }
+      ],
+      "conflict": "opened-cans"
+    },
+    {
+      "id": "soy-products",
+      "category": "other",
+      "name": "Soy products",
+      "examples": [
+        "tofu",
+        "soy milk",
+        "soy yoghurt",
+        "tempeh",
+        "edamame"
+      ],
+      "match_terms": [
+        "tofu",
+        "soy milk",
+        "soy yoghurt",
+        "soya",
+        "tempeh",
+        "edamame",
+        "bean curd"
+      ],
+      "rating": "green",
+      "caveat": "Check best-before / use-by dates and follow storage instructions.",
+      "safe_if": null,
+      "reason": "All soy products are safe.",
+      "hazards": [],
+      "ask_restaurant": null,
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 6,
+          "says": "All soy products like tofu, soy milk and soy yoghurt are safe."
+        },
+        {
+          "doc": "nsw",
+          "page": 12,
+          "says": "All soy products: check dates and follow storage instructions."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "grains-bread",
+      "category": "other",
+      "name": "Bread, cereals, rice, pasta, noodles",
+      "examples": [
+        "wholegrain bread",
+        "breakfast cereal",
+        "rice",
+        "pasta"
+      ],
+      "match_terms": [
+        "bread",
+        "cereal",
+        "rice",
+        "pasta",
+        "noodles",
+        "oats",
+        "quinoa",
+        "couscous"
+      ],
+      "rating": "green",
+      "caveat": null,
+      "safe_if": null,
+      "reason": "Recommended staple (about 8.5 serves a day, mostly wholegrain). Most Australian bread (not organic) is fortified with iodine and folic acid.",
+      "hazards": [],
+      "ask_restaurant": null,
+      "sources": [
+        {
+          "doc": "nsw",
+          "page": 3,
+          "says": "Grain foods 8.5 servings a day, mostly wholegrain."
+        },
+        {
+          "doc": "nsw",
+          "page": 6,
+          "says": "Most breads except organic are fortified with iodine."
+        },
+        {
+          "doc": "nsw",
+          "page": 4,
+          "says": "Most breads and some cereals have added folic acid."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "nuts-legumes",
+      "category": "other",
+      "name": "Nuts, seeds, legumes",
+      "examples": [
+        "almonds",
+        "peanut butter",
+        "chickpeas",
+        "lentils",
+        "kidney beans"
+      ],
+      "match_terms": [
+        "nuts",
+        "almonds",
+        "peanut",
+        "peanut butter",
+        "chickpeas",
+        "lentils",
+        "beans",
+        "legumes"
+      ],
+      "rating": "green",
+      "caveat": "Cook legumes. Sesame is the exception (see sesame rules).",
+      "safe_if": null,
+      "reason": "Good sources of protein, folate and iron.",
+      "hazards": [],
+      "ask_restaurant": null,
+      "sources": [
+        {
+          "doc": "nsw",
+          "page": 2,
+          "says": "Meat, fish, poultry, cooked eggs, nuts, seeds and tofu are part of a healthy diet."
+        },
+        {
+          "doc": "nsw",
+          "page": 5,
+          "says": "Cooked legumes such as chickpeas, lentils, kidney and lima beans are iron-rich."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "alcohol",
+      "category": "drinks",
+      "name": "Alcohol",
+      "examples": [
+        "wine",
+        "beer",
+        "spirits",
+        "cocktails",
+        "cider",
+        "desserts or sauces with uncooked alcohol"
+      ],
+      "match_terms": [
+        "alcohol",
+        "wine",
+        "beer",
+        "spirits",
+        "vodka",
+        "gin",
+        "rum",
+        "whisky",
+        "cocktail",
+        "cider",
+        "liqueur",
+        "champagne",
+        "prosecco",
+        "sake",
+        "soju"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": null,
+      "reason": "No amount of alcohol is safe in pregnancy. It can cause miscarriage, stillbirth, premature birth or foetal alcohol syndrome.",
+      "hazards": [
+        "alcohol"
+      ],
+      "ask_restaurant": "Ask for a mocktail or alcohol-free option.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 1,
+          "says": "Best to avoid alcohol completely. No amount is safe during pregnancy."
+        },
+        {
+          "doc": "nsw",
+          "page": 11,
+          "says": "Safest option is not to drink if pregnant, planning pregnancy or breastfeeding (NHMRC)."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "energy-drinks",
+      "category": "drinks",
+      "name": "Energy drinks with caffeine or guarana",
+      "examples": [
+        "Red Bull",
+        "V",
+        "Monster",
+        "Mother",
+        "caffeinated sports drinks"
+      ],
+      "match_terms": [
+        "energy drink",
+        "red bull",
+        "monster",
+        "mother",
+        "guarana",
+        "taurine",
+        "pre-workout",
+        "v energy"
+      ],
+      "rating": "red",
+      "caveat": null,
+      "safe_if": null,
+      "reason": "Contain caffeine or guarana (another caffeine source).",
+      "hazards": [
+        "caffeine"
+      ],
+      "ask_restaurant": null,
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 1,
+          "says": "Energy drinks like Red Bull and V contain caffeine or guarana. Best not to have these."
+        },
+        {
+          "doc": "rwh",
+          "page": 7,
+          "says": "Avoid energy drinks with guarana or caffeine such as V, Red Bull, Mother."
+        },
+        {
+          "doc": "nsw",
+          "page": 11,
+          "says": "Avoid drinks marked as sports or energy drinks that contain caffeine."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "caffeine",
+      "category": "drinks",
+      "name": "Coffee, tea, cola, hot chocolate (caffeine)",
+      "examples": [
+        "espresso",
+        "latte",
+        "instant coffee",
+        "black tea",
+        "green tea",
+        "cola",
+        "hot chocolate",
+        "chocolate"
+      ],
+      "match_terms": [
+        "coffee",
+        "espresso",
+        "latte",
+        "cappuccino",
+        "flat white",
+        "long black",
+        "instant coffee",
+        "tea",
+        "chai",
+        "matcha",
+        "cola",
+        "coke",
+        "hot chocolate",
+        "cocoa",
+        "caffeine",
+        "double shot"
+      ],
+      "rating": "amber",
+      "caveat": "Keep total caffeine under 200 mg a day: about 1-2 espresso-style coffees, or 3 instant coffees, or 4-5 cups of tea, hot chocolate or cola. Avoid double-shot espresso (NSW).",
+      "safe_if": null,
+      "limit": {
+        "amount": 200,
+        "unit": "mg_caffeine",
+        "per": "day",
+        "equivalents": {
+          "espresso_cup": "1-2 cups",
+          "instant_coffee_cup": "3 cups (RWH page 1 says 2-3)",
+          "tea_cup": "4 cups medium strength (NSW) / 3-5 or 4-5 depending on strength (RWH)",
+          "hot_chocolate_or_cocoa_cup": "4 cups (NSW) / 4-5 (RWH)",
+          "cola_cup": "4-5 (RWH)"
+        }
+      },
+      "reason": "Too much caffeine may increase the chance of miscarriage, premature birth or low birth weight. Caffeine also reduces iron absorption.",
+      "hazards": [
+        "caffeine"
+      ],
+      "ask_restaurant": "Ask for a single shot, or decaf.",
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 1,
+          "says": "Limit caffeine to 200 mg per day: 1-2 espresso, 2-3 instant, 3-5 tea, hot chocolate or cola."
+        },
+        {
+          "doc": "rwh",
+          "page": 7,
+          "says": "200 mg per day: 1-2 espresso, 3 instant, 4-5 tea, hot chocolate or cola."
+        },
+        {
+          "doc": "nsw",
+          "page": 11,
+          "says": "Limit to 200 mg daily: 1-2 espresso, 3 instant, 4 medium tea, 4 cocoa/hot chocolate. Avoid double shots."
+        },
+        {
+          "doc": "nsw",
+          "page": 5,
+          "says": "Caffeine in tea, coffee and cola reduces iron absorption."
+        }
+      ],
+      "conflict": "caffeine-equivalents"
+    },
+    {
+      "id": "artificial-sweeteners",
+      "category": "drinks",
+      "name": "Artificial sweeteners",
+      "examples": [
+        "diet soft drink sweetener",
+        "sweetener tablets",
+        "sugar-free products"
+      ],
+      "match_terms": [
+        "sweetener",
+        "aspartame",
+        "sucralose",
+        "stevia",
+        "acesulfame",
+        "saccharin",
+        "sugar free",
+        "diet"
+      ],
+      "rating": "amber",
+      "caveat": "Safe in moderation. (Note: diet cola still contains caffeine.)",
+      "safe_if": null,
+      "reason": "RWH says artificial sweeteners are safe if used in moderation.",
+      "hazards": [],
+      "ask_restaurant": null,
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 7,
+          "says": "Artificial sweeteners are safe if used in moderation."
+        }
+      ],
+      "conflict": null
+    },
+    {
+      "id": "supplements-vitamin-a",
+      "category": "supplements",
+      "name": "Non-pregnancy multivitamins and vitamin A supplements",
+      "examples": [
+        "regular multivitamin",
+        "vitamin A tablets",
+        "fish liver oil"
+      ],
+      "match_terms": [
+        "retinol",
+        "retinyl",
+        "vitamin a",
+        "multivitamin",
+        "fish liver oil",
+        "cod liver oil"
+      ],
+      "rating": "amber",
+      "caveat": "Use a pregnancy multivitamin (contains safe beta-carotene). Check regular multivitamins with a pharmacist, and talk to a doctor before taking any supplement.",
+      "safe_if": null,
+      "reason": "Regular multivitamins may contain retinol; too much vitamin A can harm the baby.",
+      "hazards": [
+        "vitamin_a"
+      ],
+      "ask_restaurant": null,
+      "sources": [
+        {
+          "doc": "rwh",
+          "page": 1,
+          "says": "Pregnancy multivitamins contain safe beta carotene. Regular multivitamins might have retinol; check with your pharmacist."
+        },
+        {
+          "doc": "nsw",
+          "page": 4,
+          "says": "Talk to a doctor or dietitian before taking supplements. Too much vitamin A can be a risk to the baby."
+        }
+      ],
+      "conflict": null
+    }
+  ],
+  "conflicts": [
+    {
+      "id": "rockmelon",
+      "topic": "Whole rockmelon (cantaloupe)",
+      "nsw": "Rockmelons: DON'T EAT (p13).",
+      "rwh": "Buy whole rockmelon and clean the skin before cutting; only pre-cut is to be avoided (p6).",
+      "app_default": "amber with warning: not OK unless whole, washed, cut at home and eaten fresh. Pre-cut stays red (rule fruit-pre-cut).",
+      "note": "Decided by Sas 2026-11-02: stricter rule, but shown as amber with a warning caveat rather than red."
+    },
+    {
+      "id": "sushi-store-bought",
+      "topic": "Store-bought sushi with cooked fillings",
+      "nsw": "Store-bought sushi: DON'T EAT. Home-made only, no raw meat or seafood, eat immediately (p12).",
+      "rwh": "Freshly made sushi without raw or smoked seafood is safe (p5, p7).",
+      "app_default": "amber with warning: not OK unless made to order with only cooked fillings and eaten straight away. Display, sushi train and supermarket sushi stays red.",
+      "note": "Decided by Sas 2026-11-02: stricter rule, shown as amber with a warning caveat. Both guides agree raw or smoked seafood sushi is red."
+    },
+    {
+      "id": "reheat-temperature",
+      "topic": "How hot to reheat food",
+      "nsw": "Reheat to at least 60°C until steaming hot (p10, p12).",
+      "rwh": "Cook or reheat until steaming hot, at least 74°C for 2 minutes, to kill listeria (p2).",
+      "app_default": "Use 'steaming hot all the way through' in plain text, and show 74°C for 2 minutes where a number is given.",
+      "note": "Both say 'steaming hot'; only the number differs."
+    },
+    {
+      "id": "time-out-of-fridge",
+      "topic": "How long fridge food can sit out",
+      "nsw": "Don't eat if left out for two hours or more (p10).",
+      "rwh": "Preferably within 2 hours, definitely within 4; throw out at 4+ hours (p2). Cold foods within 4 hours of preparation (p7).",
+      "app_default": "2 hours",
+      "note": null
+    },
+    {
+      "id": "fish-serves",
+      "topic": "Recommended fish per week",
+      "nsw": "2-3 serves per week (p9).",
+      "rwh": "1-3 serves per week (p1, p5).",
+      "app_default": "Show 2-3 serves (150 g each) as the target, with up to 3. Not a safety conflict.",
+      "note": "Both use a 150 g serve."
+    },
+    {
+      "id": "caffeine-equivalents",
+      "topic": "Cups of coffee/tea that equal 200 mg caffeine",
+      "nsw": "1-2 espresso, 3 instant, 4 medium tea, 4 cocoa/hot chocolate (p11). Avoid double-shot espresso.",
+      "rwh": "Page 1: 1-2 espresso, 2-3 instant, 3-5 tea/hot chocolate/cola. Page 7: 1-2 espresso, 3 instant, 4-5 tea/hot chocolate/cola. (RWH differs from itself.)",
+      "app_default": "Track mg where known (e.g. barcode). For cups, use the lower counts: 1 espresso-style coffee or 2 instant counts as roughly half the daily limit.",
+      "note": "All agree on the 200 mg/day limit."
+    },
+    {
+      "id": "soft-cheese-list",
+      "topic": "Which soft cheeses to avoid",
+      "nsw": "All soft and semi-soft cheeses, naming brie, camembert, ricotta, fetta, bocconcini and blue (p13).",
+      "rwh": "Brie, camembert, ricotta, feta, blue cheese (p2, p5). Does not mention bocconcini/mozzarella.",
+      "app_default": "Use NSW's broader 'soft and semi-soft' scope, incl. bocconcini and fresh mozzarella.",
+      "note": "Not a contradiction, NSW is broader."
+    },
+    {
+      "id": "pre-made-sandwiches",
+      "topic": "Pre-made sandwiches and wraps",
+      "nsw": "Pre-prepared or pre-packaged sandwiches or wraps: DON'T EAT, regardless of filling (p7, p12).",
+      "rwh": "Avoid cold meats, chicken or turkey from sandwich shops and cafes (p4); no blanket ban on pre-made sandwiches.",
+      "app_default": "red (NSW)",
+      "note": null
+    },
+    {
+      "id": "frozen-veg",
+      "topic": "Frozen vegetables",
+      "nsw": "Cook, don't eat uncooked (p13).",
+      "rwh": "Canned and frozen vegetables are fine (p6), no mention of cooking.",
+      "app_default": "amber: cook frozen vegetables before eating.",
+      "note": null
+    },
+    {
+      "id": "opened-cans",
+      "topic": "Opened canned food",
+      "nsw": "Store unused portions in the fridge in clean sealed containers and use within a day (p12).",
+      "rwh": "Follow the storage instructions after opening (p7).",
+      "app_default": "Within a day, in the fridge (NSW).",
+      "note": null
+    },
+    {
+      "id": "steak-doneness",
+      "topic": "Is a 'medium' steak OK?",
+      "nsw": "Beef, pork, chicken, mince: cook thoroughly to at least 71°C (medium), eat while hot (p12). Also: no pink left in mince or sausages (p10).",
+      "rwh": "Thoroughly cooked meat only; don't eat raw or undercooked meat (p4).",
+      "app_default": "Rare and medium-rare red. Medium or more amber for whole cuts of beef/lamb (cooked to 71°C). Mince, sausages, burgers, pork and chicken must have no pink.",
+      "note": "Not a direct contradiction; NSW is just more specific."
+    }
+  ],
+  "handling_tips": [
+    {
+      "tip": "Wash your hands before preparing or eating food, and after gardening or handling pets.",
+      "sources": [
+        "rwh p2",
+        "nsw p10"
+      ]
+    },
+    {
+      "tip": "Use separate clean chopping boards and knives for raw and cooked food.",
+      "sources": [
+        "rwh p2",
+        "nsw p10"
+      ]
+    },
+    {
+      "tip": "Keep the fridge below 5°C. Keep eggs in the fridge. Cover stored food.",
+      "sources": [
+        "rwh p3",
+        "nsw p10"
+      ]
+    },
+    {
+      "tip": "Keep raw meat on the bottom shelf so juices don't drip onto other food.",
+      "sources": [
+        "rwh p3",
+        "nsw p10"
+      ]
+    },
+    {
+      "tip": "Thaw and marinate food in the fridge or microwave, never on the bench.",
+      "sources": [
+        "rwh p3",
+        "nsw p10"
+      ]
+    },
+    {
+      "tip": "Refrigerate hot food as soon as it stops steaming.",
+      "sources": [
+        "rwh p2"
+      ]
+    },
+    {
+      "tip": "Boil marinades that held raw meat before serving them.",
+      "sources": [
+        "nsw p10"
+      ]
+    },
+    {
+      "tip": "Use a food thermometer if you can.",
+      "sources": [
+        "nsw p10"
+      ]
+    },
+    {
+      "tip": "Don't eat past the use-by date. If in doubt, throw it out.",
+      "sources": [
+        "rwh p3",
+        "nsw p10"
+      ]
+    },
+    {
+      "tip": "Avoid food made by someone who is sick (e.g. with diarrhoea).",
+      "sources": [
+        "nsw p10"
+      ]
+    },
+    {
+      "tip": "Wear gloves for cat litter and gardening.",
+      "sources": [
+        "rwh p2",
+        "nsw p8"
+      ]
+    },
+    {
+      "tip": "Shop with a cooler bag; take an esky on picnics.",
+      "sources": [
+        "nsw p10"
+      ]
+    },
+    {
+      "tip": "When travelling overseas, avoid tap water. Don't swallow lake or river water.",
+      "sources": [
+        "nsw p8"
+      ]
+    }
+  ],
+  "nutrition_notes": [
+    {
+      "nutrient": "folate",
+      "note": "Folic acid supplement of at least 400 micrograms a day from a month before pregnancy through the first three months. Folate-rich foods: green leafy vegetables, broccoli, chickpeas, nuts, orange juice, dried beans and peas, fortified bread and cereals.",
+      "sources": [
+        "nsw p4"
+      ]
+    },
+    {
+      "nutrient": "iron",
+      "note": "27 mg a day. Iron-rich: lean beef and lamb, poultry, fish, iron-fortified cereals, eggs, cooked legumes, dried fruit, green vegetables. Vitamin C helps absorption; caffeine reduces it. Only take iron supplements on a doctor's advice.",
+      "sources": [
+        "nsw p5"
+      ]
+    },
+    {
+      "nutrient": "calcium",
+      "note": "1000-1300 mg a day; about 2.5 serves of dairy or calcium-fortified soy (3.5 if 18 or under).",
+      "sources": [
+        "nsw p6"
+      ]
+    },
+    {
+      "nutrient": "iodine",
+      "note": "Higher needs in pregnancy. Most non-organic Australian bread is iodine-fortified; some women need a supplement, so ask a doctor, midwife or dietitian. Fish also provides iodine.",
+      "sources": [
+        "nsw p6",
+        "rwh p1"
+      ]
+    },
+    {
+      "nutrient": "omega_3",
+      "note": "From fish; important for the baby's brain and nervous system.",
+      "sources": [
+        "rwh p1",
+        "nsw p9"
+      ]
+    }
+  ],
+  "disclaimer": "General information only, based on the two listed guides. It is not medical advice. For advice specific to you, talk to your doctor, midwife or obstetrician."
+}
