@@ -248,19 +248,29 @@ async function shrinkPhoto(file) {
 }
 
 function setupPhotos() {
-  const input = document.getElementById("photo-input");
   const results = document.getElementById("photo-results");
   const loadingText = { dish: "Checking the dish…", menu: "Reading the menu… this can take up to 30 seconds.", label: "Checking the label…" };
+  const modeButtons = document.querySelectorAll(".photo-btn");
 
-  for (const button of document.querySelectorAll(".photo-btn")) {
+  for (const button of modeButtons) {
     button.addEventListener("click", () => {
       state.mode = button.dataset.mode;
-      input.value = "";
-      input.click();
+      for (const other of modeButtons) other.setAttribute("aria-pressed", String(other === button));
     });
   }
 
-  input.addEventListener("change", async () => {
+  const camera = document.getElementById("camera-input");
+  const gallery = document.getElementById("gallery-input");
+  document.getElementById("camera-btn").addEventListener("click", () => {
+    camera.value = "";
+    camera.click();
+  });
+  document.getElementById("gallery-btn").addEventListener("click", () => {
+    gallery.value = "";
+    gallery.click();
+  });
+
+  const onPhoto = async (input) => {
     const file = input.files?.[0];
     if (!file) return;
     let photo;
@@ -273,7 +283,9 @@ function setupPhotos() {
     results.replaceChildren(el("img", { class: "preview", src: photo.dataUrl, alt: "Your photo" }), resultBox);
     results.scrollIntoView({ behavior: "smooth", block: "start" });
     await askAi(resultBox, { mode: state.mode, image: { data: photo.data, media_type: photo.media_type } }, loadingText[state.mode]);
-  });
+  };
+  camera.addEventListener("change", () => onPhoto(camera));
+  gallery.addEventListener("change", () => onPhoto(gallery));
 }
 
 // ---------- install prompt ----------

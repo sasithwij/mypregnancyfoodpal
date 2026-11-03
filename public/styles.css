@@ -100,8 +100,13 @@ main { max-width: 640px; margin: 0 auto; padding: 12px 12px 0; }
   background: transparent; color: var(--text); cursor: pointer;
 }
 .photo-btn .emoji { font-size: 1.7rem; }
-.photo-btn:active { background: var(--brand); color: var(--brand-ink); }
+.photo-btn[aria-pressed="true"] { background: var(--brand); color: var(--brand-ink); }
 .photo-btn:disabled { opacity: 0.5; }
+
+.step { margin: 14px 0 8px; font-weight: 600; color: var(--muted); font-size: 0.92rem; }
+.step:first-of-type { margin-top: 0; }
+.source-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.source-buttons button { padding: 14px 8px; font-size: 1rem; }
 
 .hint { color: var(--muted); font-size: 0.85rem; margin: 10px 0 0; }
 
