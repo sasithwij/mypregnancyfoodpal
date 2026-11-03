@@ -4,7 +4,7 @@ const RATING_LABEL = { red: "Avoid", amber: "Caution", green: "OK", unknown: "No
 const SOURCE_NAME = { nsw: "NSW Food Authority", rwh: "Royal Women's Hospital" };
 const MAX_PHOTO_SIDE = 1568;
 
-const state = { rulesFile: null, index: [], rulesById: new Map(), mode: "dish" };
+const state = { rulesFile: null, index: [], rulesById: new Map() };
 
 // ---------- small DOM helper (text only, never innerHTML) ----------
 function el(tag, attrs = {}, ...children) {
@@ -249,16 +249,6 @@ async function shrinkPhoto(file) {
 
 function setupPhotos() {
   const results = document.getElementById("photo-results");
-  const loadingText = { dish: "Checking the dish…", menu: "Reading the menu… this can take up to 30 seconds.", label: "Checking the label…" };
-  const modeButtons = document.querySelectorAll(".photo-btn");
-
-  for (const button of modeButtons) {
-    button.addEventListener("click", () => {
-      state.mode = button.dataset.mode;
-      for (const other of modeButtons) other.setAttribute("aria-pressed", String(other === button));
-    });
-  }
-
   const camera = document.getElementById("camera-input");
   const gallery = document.getElementById("gallery-input");
   document.getElementById("camera-btn").addEventListener("click", () => {
@@ -282,7 +272,7 @@ function setupPhotos() {
     const resultBox = el("div");
     results.replaceChildren(el("img", { class: "preview", src: photo.dataUrl, alt: "Your photo" }), resultBox);
     results.scrollIntoView({ behavior: "smooth", block: "start" });
-    await askAi(resultBox, { mode: state.mode, image: { data: photo.data, media_type: photo.media_type } }, loadingText[state.mode]);
+    await askAi(resultBox, { image: { data: photo.data, media_type: photo.media_type } }, "Checking your photo… a menu can take up to 30 seconds.");
   };
   camera.addEventListener("change", () => onPhoto(camera));
   gallery.addEventListener("change", () => onPhoto(gallery));
