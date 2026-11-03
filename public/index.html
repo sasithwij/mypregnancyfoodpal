@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Pregnancy Food Pal</title>
+  <title>Food Pal</title>
   <meta name="description" content="Is this food safe in pregnancy? Red, amber or green, with the reason.">
-  <meta name="theme-color" content="#2f7d6d">
+  <meta name="theme-color" content="#fbf5f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a1219" media="(prefers-color-scheme: dark)">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -13,50 +14,106 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
   <link rel="icon" type="image/png" href="icons/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="top">
-    <h1>Pregnancy Food Pal</h1>
-    <p class="tagline">Is it safe to eat? Type a food or snap a photo.</p>
-  </header>
+  <!-- Line icons, used with <svg class="i"><use href="#i-name"/></svg> -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
+    <symbol id="i-avoid" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></symbol>
+    <symbol id="i-caution" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4M12 17h.01"/></symbol>
+    <symbol id="i-ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></symbol>
+    <symbol id="i-unknown" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 17v4M17 19h4"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 21c-4.5-2.6-8-6-8-10a4 4 0 0 1 8-1.5A4 4 0 0 1 20 11c0 4-3.5 7.4-8 10z"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 3v12M8 7l4-4 4 4"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></symbol>
+  </svg>
 
-  <main>
+  <!-- ===== Check ===== -->
+  <main id="view-check" class="screen stack" data-view="check">
+    <div class="brand">
+      <div class="brand-mark"><svg class="i" aria-hidden="true"><use href="#i-heart"/></svg></div>
+      <div class="brand-name">Food Pal</div>
+    </div>
+    <h1>Is it safe to eat today?</h1>
+
     <section id="install-card" class="card install" hidden>
-      <h2 class="section-title">Add to your home screen</h2>
-      <p id="install-text"></p>
-      <button id="install-btn" class="primary" type="button" hidden>Install app</button>
-      <button id="install-dismiss" class="link-btn" type="button">Not now</button>
-    </section>
-    <section class="card" aria-labelledby="search-label">
-      <label id="search-label" for="search" class="section-title">Type a food</label>
-      <div class="search-row">
-        <input id="search" type="search" placeholder="e.g. brie, smoked salmon, sushi" autocomplete="off" autocapitalize="none" enterkeyhint="search">
-        <button id="clear-search" class="icon-btn" type="button" aria-label="Clear" hidden>&times;</button>
+      <div class="card-row">
+        <div class="rating-icon" style="background:var(--surface-2);color:var(--accent-text)"><svg class="i" aria-hidden="true"><use href="#i-share"/></svg></div>
+        <div class="stack" style="gap:4px">
+          <h2 style="font-size:18px">Add Food Pal to your home screen</h2>
+          <p id="install-text" class="small muted"></p>
+        </div>
       </div>
-      <div id="search-results" aria-live="polite"></div>
+      <div class="install-actions">
+        <button id="install-btn" class="btn btn-primary btn-small" type="button" hidden>Install app</button>
+        <button id="install-dismiss" class="link-btn" type="button">Not now</button>
+      </div>
     </section>
 
-    <section class="card">
-      <h2 class="section-title">Snap a photo</h2>
-      <p class="intro">Snap a dish, a menu or a food label. The AI works out which it is.</p>
-      <div class="source-buttons">
-        <button id="camera-btn" class="primary" type="button">📷 Take a snap</button>
-        <button id="gallery-btn" class="secondary" type="button">🖼️ From gallery</button>
-      </div>
-      <!-- capture opens the camera straight away; the browser asks for camera permission the first time -->
-      <input id="camera-input" type="file" accept="image/*" capture="environment" hidden>
-      <input id="gallery-input" type="file" accept="image/*" hidden>
-      <p class="hint">Checked by AI against the same rules. It takes about 10 to 30 seconds.</p>
-      <div id="photo-results" aria-live="polite"></div>
-    </section>
+    <label class="search" for="search">
+      <svg class="i" aria-hidden="true"><use href="#i-search"/></svg>
+      <input id="search" type="search" placeholder="Try brie, sushi, smoked salmon" autocomplete="off" autocapitalize="none" enterkeyhint="search" aria-label="Search a food">
+      <button id="clear-search" class="icon-btn" type="button" aria-label="Clear search" hidden><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button>
+    </label>
 
+    <div class="snap-row">
+      <button id="camera-btn" class="btn btn-primary" type="button"><svg class="i" aria-hidden="true"><use href="#i-camera"/></svg>Take a snap</button>
+      <button id="gallery-btn" class="btn btn-soft" type="button"><svg class="i" aria-hidden="true"><use href="#i-image"/></svg>Gallery</button>
+    </div>
+    <!-- capture opens the camera straight away; the browser asks for camera permission the first time -->
+    <input id="camera-input" type="file" accept="image/*" capture="environment" hidden>
+    <input id="gallery-input" type="file" accept="image/*" hidden>
+    <p class="tiny muted" id="snap-hint">Snap a dish, a menu or a food label. It takes about 10 to 30 seconds.</p>
+
+    <div id="photo-results" class="stack" aria-live="polite"></div>
+    <div id="search-results" class="stack" aria-live="polite"></div>
+
+    <p class="tiny muted">General information only, not medical advice. For advice about you, talk to your doctor, midwife or obstetrician.</p>
   </main>
 
-  <footer class="foot">
-    <p>Based only on the <a href="https://www.foodauthority.nsw.gov.au/foodsafetyandyou/life-events-and-food/pregnancy" target="_blank" rel="noopener">NSW Food Authority</a> pregnancy brochure (2023) and the <a href="https://www.thewomens.org.au/health-information/fact-sheets" target="_blank" rel="noopener">Royal Women's Hospital</a> fact sheet (March 2026). Where they differ, the stricter advice wins.</p>
-    <p><strong>General information only, not medical advice.</strong> For advice specific to you, talk to your doctor, midwife or obstetrician.</p>
-  </footer>
+  <!-- ===== Food guide ===== -->
+  <main id="view-guide" class="screen stack" data-view="guide" hidden>
+    <h1>Food guide</h1>
+    <p class="muted">Every food in the two Australian guides, sorted by how safe it is.</p>
+    <div class="chips" role="group" aria-label="Show">
+      <button class="chip" type="button" data-filter="red" aria-pressed="true">Avoid</button>
+      <button class="chip" type="button" data-filter="amber" aria-pressed="false">Caution</button>
+      <button class="chip" type="button" data-filter="green" aria-pressed="false">OK</button>
+    </div>
+    <p id="guide-count" class="eyebrow"></p>
+    <div id="guide-list" class="results"></div>
+  </main>
+
+  <!-- ===== About ===== -->
+  <main id="view-about" class="screen stack" data-view="about" hidden>
+    <h1>About Food Pal</h1>
+    <div class="card prose">
+      <p>Food Pal tells you if a food is OK to eat while pregnant, and why.</p>
+      <p><strong>Avoid</strong> means don't eat it. <strong>Caution</strong> means it's fine only in the way described, so read the box. <strong>OK</strong> means go ahead.</p>
+      <p>It's based only on the <a href="https://www.foodauthority.nsw.gov.au/foodsafetyandyou/life-events-and-food/pregnancy" target="_blank" rel="noopener">NSW Food Authority</a> pregnancy brochure (2023) and the <a href="https://www.thewomens.org.au/health-information/fact-sheets" target="_blank" rel="noopener">Royal Women's Hospital</a> fact sheet (March 2026). Where they differ, the stricter advice wins.</p>
+      <p>Photo checks are done by AI against the same rules. AI can misread a photo, so if anything looks wrong, ask the staff.</p>
+      <p><strong>General information only, not medical advice.</strong> For advice specific to you, talk to your doctor, midwife or obstetrician.</p>
+    </div>
+  </main>
+
+  <nav class="tabbar" aria-label="Main">
+    <div class="tabbar-inner">
+      <a class="tab" href="#check" data-tab="check" aria-current="page"><svg class="i" aria-hidden="true"><use href="#i-search"/></svg>Check</a>
+      <a class="tab" href="#guide" data-tab="guide"><svg class="i" aria-hidden="true"><use href="#i-book"/></svg>Food guide</a>
+      <a class="tab" href="#about" data-tab="about"><svg class="i" aria-hidden="true"><use href="#i-info"/></svg>About</a>
+    </div>
+  </nav>
 
   <script type="module" src="app.js"></script>
 </body>
