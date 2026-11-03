@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Pregnancy Food Pal</title>
+  <meta name="description" content="Is this food safe in pregnancy? Red, amber or green, with the reason.">
+  <meta name="theme-color" content="#2f7d6d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Food Pal">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="icons/favicon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="top">
+    <h1>Pregnancy Food Pal</h1>
+    <p class="tagline">Is it safe to eat? Type a food or snap a photo.</p>
+  </header>
+
+  <main>
+    <section id="install-card" class="card install" hidden>
+      <h2 class="section-title">Add to your home screen</h2>
+      <p id="install-text"></p>
+      <button id="install-btn" class="primary" type="button" hidden>Install app</button>
+      <button id="install-dismiss" class="link-btn" type="button">Not now</button>
+    </section>
+    <section class="card" aria-labelledby="search-label">
+      <label id="search-label" for="search" class="section-title">Type a food</label>
+      <div class="search-row">
+        <input id="search" type="search" placeholder="e.g. brie, smoked salmon, sushi" autocomplete="off" autocapitalize="none" enterkeyhint="search">
+        <button id="clear-search" class="icon-btn" type="button" aria-label="Clear" hidden>&times;</button>
+      </div>
+      <div id="search-results" aria-live="polite"></div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">Snap a photo</h2>
+      <div class="photo-buttons">
+        <button class="photo-btn" type="button" data-mode="dish">
+          <span class="emoji" aria-hidden="true">🍽️</span> A dish
+        </button>
+        <button class="photo-btn" type="button" data-mode="menu">
+          <span class="emoji" aria-hidden="true">📋</span> A menu
+        </button>
+        <button class="photo-btn" type="button" data-mode="label">
+          <span class="emoji" aria-hidden="true">🏷️</span> A label
+        </button>
+      </div>
+      <input id="photo-input" type="file" accept="image/*" hidden>
+      <p class="hint">The photo is checked by AI against the same rules. It takes about 10 to 30 seconds.</p>
+      <div id="photo-results" aria-live="polite"></div>
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <p>Based only on the <a href="https://www.foodauthority.nsw.gov.au/foodsafetyandyou/life-events-and-food/pregnancy" target="_blank" rel="noopener">NSW Food Authority</a> pregnancy brochure (2023) and the <a href="https://www.thewomens.org.au/health-information/fact-sheets" target="_blank" rel="noopener">Royal Women's Hospital</a> fact sheet (March 2026). Where they differ, the stricter advice wins.</p>
+    <p><strong>General information only, not medical advice.</strong> For advice specific to you, talk to your doctor, midwife or obstetrician.</p>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

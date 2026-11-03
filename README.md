@@ -61,9 +61,40 @@ The file also has hazard explanations, food handling tips and nutrition notes (f
 ## Plan
 
 1. ✅ **Rules list** built from the two guides (done, 2 Nov 2026).
-2. ⬜ **Phone app** with a text search and an AI photo / menu check, installable without an app store.
+2. 🟡 **Phone app** with a text search and an AI photo / menu check, installable without an app store (built, being deployed).
 3. ⬜ **Barcode scanning** using [Open Food Facts](https://world.openfoodfacts.org/).
 4. ⬜ **Test with the first user**, then plan a bigger version.
+
+## The app
+
+A web app that installs from the browser (no app store): Safari on iPhone, Chrome on Android.
+
+- **Type a food:** searches the rules on the phone, works offline.
+- **Snap a dish, menu or label:** the photo goes to `api/check.js`, a Vercel serverless function that asks Claude to rate each item against the rules and say what to ask the kitchen to change. The AI key stays on the server.
+
+| Path | What it is |
+|---|---|
+| `public/` | The app (HTML, CSS, JS, icons, manifest). `rules.json` and `sw.js` are generated at build time. |
+| `public/search.js` | Offline text search. |
+| `api/check.js` | AI photo and text check. |
+| `lib/prompt.js` | Instructions and answer format for the AI. |
+| `scripts/build.mjs` | Copies the rules into `public/` and writes the offline cache. |
+| `scripts/dev.mjs` | Local test server. |
+
+### Settings (Vercel environment variables)
+
+- `ANTHROPIC_API_KEY` (required): key from console.anthropic.com.
+- `APP_PASSCODE` (optional, recommended): if set, photo checks ask for this passcode once, so strangers who find the link can't spend your AI credit.
+
+### Running it on a computer
+
+```
+npm install
+npm test
+ANTHROPIC_API_KEY=... npm run dev     # or MOCK_AI=1 npm run dev for fake AI answers
+```
+
+Then open http://localhost:3000.
 
 ## Disclaimer
 
