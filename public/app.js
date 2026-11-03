@@ -33,13 +33,41 @@ function storage(key, value) {
   return null;
 }
 
+// ---------- icons (from the sprite in index.html) ----------
+const SVG_NS = "http://www.w3.org/2000/svg";
+const RATING_ICON = { red: "avoid", amber: "caution", green: "ok", unknown: "unknown" };
+
+function icon(name) {
+  const svg = document.createElementNS(SVG_NS, "svg");
+  svg.setAttribute("class", "i");
+  svg.setAttribute("aria-hidden", "true");
+  const use = document.createElementNS(SVG_NS, "use");
+  use.setAttribute("href", `#i-${name}`);
+  svg.append(use);
+  return svg;
+}
+
 // ---------- rule cards ----------
-function badge(rating) {
-  return el("span", { class: "badge" }, RATING_LABEL[rating] ?? RATING_LABEL.unknown);
+function resultHead(rating, name) {
+  const key = RATING_LABEL[rating] ? rating : "unknown";
+  return el(
+    "div",
+    { class: "result-head" },
+    el("div", { class: "rating-icon" }, icon(RATING_ICON[key])),
+    el("div", {}, el("div", { class: "rating-label" }, RATING_LABEL[key]), el("div", { class: "result-name" }, name)),
+  );
 }
 
 function warningBox(text) {
-  return el("div", { class: "warning", role: "alert" }, text);
+  return el("div", { class: "warning", role: "note" }, icon("caution"), el("div", {}, text));
+}
+
+function askBox(text) {
+  return el("div", { class: "ask" }, icon("chat"), el("div", {}, text));
+}
+
+function summaryRow(text) {
+  return el("summary", {}, text, icon("chevron"));
 }
 
 function limitText(limit) {
@@ -56,7 +84,7 @@ function sourcesList(rule) {
   return el(
     "details",
     { class: "details" },
-    el("summary", {}, "Where this comes from"),
+    summaryRow("Where this comes from"),
     el(
       "ul",
       {},
@@ -73,13 +101,13 @@ function ruleCard(rule) {
   return el(
     "article",
     { class: `result ${rule.rating}` },
-    el("div", { class: "result-head" }, el("div", { class: "result-name" }, rule.name), badge(rule.rating)),
+    resultHead(rule.rating, rule.name),
     isWarning && rule.caveat ? warningBox(rule.caveat) : null,
     !isWarning && rule.caveat ? el("p", {}, el("span", { class: "label" }, "Only if: "), rule.caveat) : null,
     rule.safe_if ? el("p", {}, el("span", { class: "label" }, "Safe if: "), rule.safe_if) : null,
     el("p", {}, el("span", { class: "label" }, "Why: "), rule.reason),
     limitText(rule.limit) ? el("p", {}, limitText(rule.limit)) : null,
-    rule.ask_restaurant ? el("div", { class: "ask" }, rule.ask_restaurant) : null,
+    rule.ask_restaurant ? askBox(rule.ask_restaurant) : null,
     sourcesList(rule),
   );
 }
@@ -91,10 +119,10 @@ function aiItemCard(item) {
   return el(
     "article",
     { class: `result ${item.rating}` },
-    el("div", { class: "result-head" }, el("div", { class: "result-name" }, item.name), badge(item.rating)),
+    resultHead(item.rating, item.name),
     warnings.map((r) => warningBox(r.caveat)),
     el("p", {}, item.explanation),
-    item.ask_kitchen ? el("div", { class: "ask" }, item.ask_kitchen) : null,
+    item.ask_kitchen ? askBox(item.ask_kitchen) : null,
     item.confidence === "low"
       ? el("p", { class: "ai-note" }, "The AI isn't sure about this one. Check with the staff.")
       : null,
@@ -102,7 +130,7 @@ function aiItemCard(item) {
       ? el(
           "details",
           { class: "details" },
-          el("summary", {}, "Rules used"),
+          summaryRow("Rules used"),
           el(
             "ul",
             {},
@@ -138,20 +166,26 @@ function renderLoading(target, text) {
 function renderError(target, text, retry) {
   target.replaceChildren(
     el("div", { class: "error" }, text),
-    retry ? el("div", { class: "ask-ai" }, el("button", { class: "secondary", type: "button", onclick: retry }, "Try again")) : null,
+    retry ? el("div", { class: "ask-ai" }, el("button", { class: "btn btn-soft btn-small", type: "button", onclick: retry }, "Try again")) : null,
   );
 }
 
 function renderPasscode(target, retry) {
-  const input = el("input", { type: "password", id: "passcode", autocomplete: "current-password", placeholder: "Passcode" });
-  input.style.cssText = "font-size:1rem;padding:10px;border-radius:10px;border:2px solid var(--line);flex:1;min-width:0";
+  const input = el("input", {
+    type: "password",
+    id: "passcode",
+    class: "passcode-input",
+    autocomplete: "current-password",
+    placeholder: "Passcode",
+    "aria-label": "App passcode",
+  });
   const save = () => {
     storage("passcode", input.value.trim());
     retry();
   };
   target.replaceChildren(
     el("p", { class: "summary" }, "Photo checks need the app passcode. Enter it once and the app remembers it."),
-    el("div", { class: "ask-ai" }, input, el("button", { class: "primary", type: "button", onclick: save }, "Save")),
+    el("div", { class: "ask-ai" }, input, el("button", { class: "btn btn-primary btn-small", type: "button", onclick: save }, "Save")),
   );
   input.focus();
 }
@@ -190,14 +224,16 @@ function setupSearch() {
     const query = input.value.trim();
     clear.hidden = !query;
     if (!query) return results.replaceChildren();
+    document.getElementById("photo-results").replaceChildren();
     const hits = search(state.index, query);
     const aiButton = el(
       "button",
       {
-        class: "secondary",
+        class: "btn btn-soft btn-small",
         type: "button",
         onclick: () => askAi(results, { text: query }, `Asking AI about "${query}"…`),
       },
+      icon("sparkle"),
       hits.length ? "Not quite it? Ask AI" : "Ask AI about this",
     );
     results.replaceChildren(
@@ -269,7 +305,11 @@ function setupPhotos() {
     } catch (error) {
       return renderError(results, error.message);
     }
-    const resultBox = el("div");
+    const search = document.getElementById("search");
+    search.value = "";
+    document.getElementById("clear-search").hidden = true;
+    document.getElementById("search-results").replaceChildren();
+    const resultBox = el("div", { class: "stack" });
     results.replaceChildren(el("img", { class: "preview", src: photo.dataUrl, alt: "Your photo" }), resultBox);
     results.scrollIntoView({ behavior: "smooth", block: "start" });
     await askAi(resultBox, { image: { data: photo.data, media_type: photo.media_type } }, "Checking your photo… a menu can take up to 30 seconds.");
@@ -311,8 +351,41 @@ function setupInstall() {
   });
 }
 
+// ---------- food guide ----------
+function setupGuide() {
+  const list = document.getElementById("guide-list");
+  const count = document.getElementById("guide-count");
+  const chips = [...document.querySelectorAll("[data-filter]")];
+  const show = (rating) => {
+    const rules = state.rulesFile.rules
+      .filter((r) => r.rating === rating)
+      .sort((a, b) => a.name.localeCompare(b.name));
+    chips.forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.filter === rating)));
+    count.textContent = `${rules.length} foods`;
+    list.replaceChildren(...rules.map(ruleCard));
+  };
+  chips.forEach((c) => c.addEventListener("click", () => show(c.dataset.filter)));
+  show("red");
+}
+
+// ---------- tabs ----------
+function setupTabs() {
+  const views = [...document.querySelectorAll("[data-view]")];
+  const tabs = [...document.querySelectorAll("[data-tab]")];
+  const show = () => {
+    const name = location.hash.slice(1);
+    const current = views.some((v) => v.dataset.view === name) ? name : "check";
+    views.forEach((v) => (v.hidden = v.dataset.view !== current));
+    tabs.forEach((t) => (t.dataset.tab === current ? t.setAttribute("aria-current", "page") : t.removeAttribute("aria-current")));
+    window.scrollTo(0, 0);
+  };
+  window.addEventListener("hashchange", show);
+  show();
+}
+
 // ---------- start ----------
 async function start() {
+  setupTabs();
   setupInstall();
   setupPhotos();
   try {
@@ -321,6 +394,7 @@ async function start() {
     state.index = buildIndex(state.rulesFile.rules);
     state.rulesById = new Map(state.rulesFile.rules.map((r) => [r.id, r]));
     setupSearch();
+    setupGuide();
   } catch {
     renderError(document.getElementById("search-results"), "Couldn't load the food list. Check your internet and reopen the app.");
   }
