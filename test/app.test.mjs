@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { buildIndex, normalize, search } from "../public/search.js";
 import { buildSystemPrompt, cleanResult, compactRules, OUTPUT_SCHEMA } from "../lib/prompt.js";
-import handler, { buildUserContent } from "../api/check.js";
+import handler, { buildUserContent, MODELS, pickModel, requestParams } from "../api/check.js";
 
 const rulesFile = JSON.parse(readFileSync(new URL("../data/pregnancy_food_rules.json", import.meta.url), "utf8"));
 const index = buildIndex(rulesFile.rules);
@@ -108,4 +108,23 @@ test("dev server mock only uses real rule ids", () => {
   for (const [, list] of src.matchAll(/rule_ids: \[([^\]]*)\]/g)) {
     for (const id of list.match(/"[^"]+"/g) ?? []) assert.ok(known.has(id.slice(1, -1)), id);
   }
+});
+
+test("model can be picked by short name or id, defaulting to Sonnet", () => {
+  assert.equal(pickModel(undefined), MODELS.sonnet);
+  assert.equal(pickModel(" Haiku "), MODELS.haiku);
+  assert.equal(pickModel("claude-opus-5-5"), MODELS.opus);
+  assert.equal(pickModel("gpt"), MODELS.sonnet);
+});
+
+test("refusal fallback is only sent for models that support it", () => {
+  for (const model of [MODELS.opus, MODELS.sonnet]) {
+    const p = requestParams(model, "sys", []);
+    assert.equal(p.fallbacks, "default");
+    assert.deepEqual(p.betas, ["server-side-fallback-2026-07-01"]);
+  }
+  const haiku = requestParams(MODELS.haiku, "sys", []);
+  assert.equal(haiku.fallbacks, undefined);
+  assert.equal(haiku.betas, undefined);
+  assert.equal(haiku.output_config.format.type, "json_schema");
 });

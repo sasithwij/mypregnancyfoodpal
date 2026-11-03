@@ -84,6 +84,7 @@ A web app that installs from the browser (no app store): Safari on iPhone, Chrom
 ### Settings (Vercel environment variables)
 
 - `ANTHROPIC_API_KEY` (required): key from console.anthropic.com.
+- `CLAUDE_MODEL` (optional): which AI model checks photos: `sonnet` (default, about 3-4 US cents a photo), `opus` (most careful, about 8 cents) or `haiku` (cheapest, under 1 cent, may miss hidden ingredients). Redeploy after changing it. Each check logs its token use in Vercel's Logs.
 - `APP_PASSCODE` (optional, recommended): if set, photo checks ask for this passcode once, so strangers who find the link can't spend your AI credit.
 
 ### Running it on a computer
