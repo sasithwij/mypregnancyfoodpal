@@ -92,19 +92,7 @@ main { max-width: 640px; margin: 0 auto; padding: 12px 12px 0; }
   font-size: 1.6rem; width: 36px; height: 36px; cursor: pointer;
 }
 
-.photo-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-.photo-btn {
-  display: flex; flex-direction: column; align-items: center; gap: 4px;
-  padding: 14px 6px; font-size: 0.95rem; font-weight: 600;
-  border: 2px solid var(--brand); border-radius: 12px;
-  background: transparent; color: var(--text); cursor: pointer;
-}
-.photo-btn .emoji { font-size: 1.7rem; }
-.photo-btn[aria-pressed="true"] { background: var(--brand); color: var(--brand-ink); }
-.photo-btn:disabled { opacity: 0.5; }
-
-.step { margin: 14px 0 8px; font-weight: 600; color: var(--muted); font-size: 0.92rem; }
-.step:first-of-type { margin-top: 0; }
+.intro { margin: 0 0 12px; }
 .source-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .source-buttons button { padding: 14px 8px; font-size: 1rem; }
 
