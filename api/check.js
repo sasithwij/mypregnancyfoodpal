@@ -6,7 +6,41 @@ import { readFileSync } from "node:fs";
 import Anthropic from "@anthropic-ai/sdk";
 import { buildSystemPrompt, cleanResult, OUTPUT_SCHEMA } from "../lib/prompt.js";
 
-const MODEL = "claude-opus-5-5";
+// Which Claude model checks the photos. Change it in Vercel (env var CLAUDE_MODEL)
+// without touching code. Rough cost per photo: Opus 5.5 ~8c, Sonnet 5.5 ~3-4c, Haiku 5.5 <1c.
+export const MODELS = {
+  opus: "claude-opus-5-5",
+  sonnet: "claude-sonnet-5-5",
+  haiku: "claude-haiku-5-5",
+};
+const DEFAULT_MODEL = "sonnet";
+// Server-side refusal fallback is offered for these models only.
+const FALLBACK_MODELS = new Set([MODELS.opus, MODELS.sonnet]);
+
+export function pickModel(value) {
+  const key = String(value ?? "").trim().toLowerCase();
+  if (MODELS[key]) return MODELS[key];
+  if (Object.values(MODELS).includes(key)) return key;
+  return MODELS[DEFAULT_MODEL];
+}
+
+export function requestParams(model, system, content) {
+  const params = {
+    model,
+    max_tokens: 16000,
+    output_config: {
+      effort: "medium",
+      format: { type: "json_schema", schema: OUTPUT_SCHEMA },
+    },
+    system: [{ type: "text", text: system, cache_control: { type: "ephemeral" } }],
+    messages: [{ role: "user", content }],
+  };
+  if (FALLBACK_MODELS.has(model)) {
+    params.betas = ["server-side-fallback-2026-07-01"];
+    params.fallbacks = "default";
+  }
+  return params;
+}
 const MAX_IMAGE_BYTES = 3_500_000; // after base64 decode; Vercel caps request bodies at 4.5 MB
 const MAX_TEXT_CHARS = 500;
 const IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/gif"]);
@@ -92,18 +126,13 @@ export default async function handler(req, res) {
   if (built.error) return send(res, 400, { error: built.error });
 
   try {
-    const response = await getClient().beta.messages.create({
-      model: MODEL,
-      max_tokens: 16000,
-      betas: ["server-side-fallback-2026-07-01"],
-      fallbacks: "default",
-      output_config: {
-        effort: "medium",
-        format: { type: "json_schema", schema: OUTPUT_SCHEMA },
-      },
-      system: [{ type: "text", text: systemPrompt, cache_control: { type: "ephemeral" } }],
-      messages: [{ role: "user", content: built.content }],
-    });
+    const model = pickModel(process.env.CLAUDE_MODEL);
+    const response = await getClient().beta.messages.create(requestParams(model, systemPrompt, built.content));
+    // Shows in Vercel logs, so the real cost of each check can be seen.
+    const u = response.usage ?? {};
+    console.log(
+      `check model=${response.model} in=${u.input_tokens} cache_write=${u.cache_creation_input_tokens ?? 0} cache_read=${u.cache_read_input_tokens ?? 0} out=${u.output_tokens}`,
+    );
 
     if (response.stop_reason === "refusal") {
       return send(res, 422, { error: "The AI couldn't check this one. Please try another photo." });
